@@ -5,11 +5,13 @@ const getURI = () => {
   return mongoURI;
 };
 
-const connectToDB = () => {
-  mongoose
-    .connect(getURI(), { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+const connectToDB = async () => {
+  try {
+    await mongoose.connect(getURI(), { useNewUrlParser: true });
+    await console.log('MongoDB Connected');
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = { connectToDB };
