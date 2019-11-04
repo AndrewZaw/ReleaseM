@@ -8,8 +8,10 @@ app.use(express.urlencoded({ extended: false }));
 //   res.sendFile(path.join(__dirname + '../../frontend'));
 // });
 
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
 app.get('/', (req, res) => {
-  res.send('test');
+  res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'));
 });
 
 const port = process.env.PORT || 5000;
