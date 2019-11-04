@@ -1,6 +1,28 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { connectToDB } = require('./db.js');
+const { User } = require('./models');
+
+connectToDB();
+
+app.get('/api/users', (req, res) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      return err;
+    }
+    res.send(users);
+  });
+});
+
+app.post('/', (req, res) => {
+  new User({ user: 'testUser', hash: 'testhash' }).save((err, user) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/');
+  });
+});
 
 app.use(express.urlencoded({ extended: false }));
 
