@@ -22,25 +22,51 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component {
+  state = {
+    username: '',
+    password: ''
+  };
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = async event => {
+    event.preventDefault();
+    const user = {
+      username: this.state.username,
+      password: this.state.password
+    };
+    console.log(await axios.post('/api/users/add', { user }));
+  };
   render() {
     const { classes } = this.props;
+    console.log(this.state);
     return (
-      <form className={classes.container}>
+      <form className={classes.container} onSubmit={this.handleSubmit}>
         <TextField
+          onChange={this.handleChange.bind(this)}
           id="username"
+          name="username"
           className={classes.textField}
           label="Username"
           margin="normal"
         />
         <TextField
+          onChange={this.handleChange.bind(this)}
           id="password"
+          name="password"
           className={classes.textField}
           label="Password"
           type="password"
           margin="normal"
         />
         <br />
-        <Button variant="contained" color="primary" className={classes.button}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
           Submit
         </Button>
       </form>

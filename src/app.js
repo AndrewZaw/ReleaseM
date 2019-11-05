@@ -17,6 +17,18 @@ app.get('/api/users', (req, res) => {
   });
 });
 
+app.post('/api/users/add', (req, res) => {
+  new User({ username: req.body.username, hash: req.body.password }).save(
+    (err, user) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log('user added');
+      res.redirect('/');
+    }
+  );
+});
+
 app.post('/', (req, res) => {
   new User({ user: 'testUser', hash: 'testhash' }).save((err, user) => {
     if (err) {

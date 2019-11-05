@@ -22,12 +22,11 @@ class TestData extends Component {
 
   async componentDidMount() {
     const response = await axios.get('/api/users');
-    console.log(response);
-    //this.setState({ data: response.data });
+    this.setState({ data: response.data });
   }
 
   render() {
-    return <div className="container">{<Card>Nothing</Card>}</div>;
+    return <div className="container">{<Card>{this.data}</Card>}</div>;
   }
 }
 
