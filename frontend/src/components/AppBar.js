@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import MaterialAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1
   },
@@ -17,31 +17,36 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1
   }
-}));
+});
 
-const AppBar = () => {
-  const classes = useStyles();
+class AppBar extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <div className={classes.root}>
-      <MaterialAppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h4" className={classes.title}>
-            ReleaseM
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </MaterialAppBar>
-    </div>
-  );
-};
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <MaterialAppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h4" className={classes.title}>
+              ReleaseM
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </MaterialAppBar>
+      </div>
+    );
+  }
+}
 
-export default AppBar;
+export default withStyles(styles)(AppBar);
