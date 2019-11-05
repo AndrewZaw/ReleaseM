@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const { connectToDB } = require('./db.js');
 const { User } = require('./models');
+require('dotenv').config();
 
 connectToDB();
 
