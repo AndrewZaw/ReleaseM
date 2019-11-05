@@ -7,7 +7,9 @@ const getURI = () => {
 
 const connectToDB = async () => {
   try {
-    await mongoose.connect(getURI(), { useNewUrlParser: true });
+    await mongoose.connect(process.env.mongoURI || getURI(), {
+      useNewUrlParser: true
+    });
     await console.log('MongoDB Connected');
   } catch (err) {
     console.log(err);
