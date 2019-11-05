@@ -9,6 +9,7 @@ connectToDB();
 app.get('/api/users', (req, res) => {
   User.find({}, (err, users) => {
     if (err) {
+      res.send('error');
       return err;
     }
     res.send(users);
