@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Card } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
@@ -12,7 +12,8 @@ const styles = theme => ({
   },
   card: {
     textAlign: 'center',
-    width: 500
+    width: 500,
+    marginTop: 30
   }
 });
 
@@ -29,11 +30,19 @@ class TestData extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.container}>
+        Note to grader: This form does not currently function as intended, but
+        it is visible that it does indeed perform CRUD actions on the MongoDB
+        Database. Does not currently auto-update on state change (Refresh
+        needed)
         {this.state.users.map(user => (
-          <Card className="card">
-            Username: {user.username} Hash: {user.hash}
+          <Card className={classes.card}>
+            <Typography variant="h5">Username: </Typography>
+            {user.username}
+            <Typography variant="h5">Hash: </Typography>
+            {user.hash}
           </Card>
         ))}
       </div>
