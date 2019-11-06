@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 const mongoose = require('mongoose');
 const { connectToDB } = require('./db');
 connectToDB();
@@ -19,16 +20,14 @@ app.get('/api/users', (req, res) => {
 });
 
 app.post('/api/users/add', (req, res) => {
-  console.log(req.body);
-  if (req.body.username && req.body.hash) {
-    new User({ username: req.body.username, hash: req.body.hash }).save(
-      (err, user) => {
-        if (err) {
-          console.log(err);
-          res.redirect('/');
-        }
+  const user = req.body.user;
+  if (user.username && user.hash) {
+    new User({ username: user.username, hash: user.hash }).save((err, user) => {
+      if (err) {
+        console.log(err);
+        res.redirect('/');
       }
-    );
+    });
   } else {
     res.redirect('/');
   }
