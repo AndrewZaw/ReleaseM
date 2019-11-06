@@ -33,8 +33,6 @@ app.post('/api/users/add', (req, res) => {
   }
 });
 
-app.use(express.urlencoded({ extended: false }));
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
 
