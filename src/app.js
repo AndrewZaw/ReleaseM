@@ -1,11 +1,12 @@
+const path = require('path');
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const path = require('path');
-const { connectToDB } = require('./db.js');
-const { User } = require('./models');
-require('dotenv').config();
-
+app.use(express.urlencoded({ extended: false }));
+const mongoose = require('mongoose');
+const { connectToDB } = require('./db');
 connectToDB();
+const User = mongoose.model('User');
 
 app.get('/api/users', (req, res) => {
   User.find({}, (err, users) => {
@@ -13,29 +14,24 @@ app.get('/api/users', (req, res) => {
       res.send('error');
       return err;
     }
-    res.send(users);
+    res.send({ users });
   });
 });
 
 app.post('/api/users/add', (req, res) => {
-  new User({ username: req.body.username, hash: req.body.password }).save(
-    (err, user) => {
-      if (err) {
-        console.log(err);
+  console.log(req.body);
+  if (req.body.username && req.body.hash) {
+    new User({ username: req.body.username, hash: req.body.hash }).save(
+      (err, user) => {
+        if (err) {
+          console.log(err);
+          res.redirect('/');
+        }
       }
-      console.log('user added');
-      res.redirect('/');
-    }
-  );
-});
-
-app.post('/', (req, res) => {
-  new User({ user: 'testUser', hash: 'testhash' }).save((err, user) => {
-    if (err) {
-      console.log(err);
-    }
+    );
+  } else {
     res.redirect('/');
-  });
+  }
 });
 
 app.use(express.urlencoded({ extended: false }));

@@ -34,13 +34,14 @@ class LoginForm extends Component {
     event.preventDefault();
     const user = {
       username: this.state.username,
-      password: this.state.password
+      hash: this.state.password
     };
-    console.log(await axios.post('/api/users/add', { user }));
+    const response = await axios.post('/api/users/add', { user });
+    console.log(response);
   };
+
   render() {
     const { classes } = this.props;
-    console.log(this.state);
     return (
       <form className={classes.container} onSubmit={this.handleSubmit}>
         <TextField

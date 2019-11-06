@@ -11,22 +11,33 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   card: {
-    minWidth: 100
+    textAlign: 'center',
+    width: 500
   }
 });
 
 class TestData extends Component {
   state = {
-    data: []
+    users: []
   };
 
   async componentDidMount() {
     const response = await axios.get('/api/users');
-    this.setState({ data: response.data });
+    this.setState({
+      users: response.data.users
+    });
   }
 
   render() {
-    return <div className="container">{<Card>{this.data}</Card>}</div>;
+    return (
+      <div>
+        {this.state.users.map(user => (
+          <Card className="card">
+            Username: {user.username} Hash: {user.hash}
+          </Card>
+        ))}
+      </div>
+    );
   }
 }
 
