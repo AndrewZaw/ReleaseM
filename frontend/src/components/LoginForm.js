@@ -26,19 +26,19 @@ class LoginForm extends Component {
     username: '',
     password: ''
   };
-  
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
 
-  handleSubmit = async event => {
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
     const user = {
       username: this.state.username,
       hash: this.state.password
     };
     await axios.post('/api/users/add', { user });
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -62,12 +62,7 @@ class LoginForm extends Component {
           margin="normal"
         />
         <br />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
+        <Button type="submit" variant="contained" color="primary" className={classes.button}>
           Submit
         </Button>
       </form>
