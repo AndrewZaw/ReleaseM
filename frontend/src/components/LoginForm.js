@@ -36,7 +36,7 @@ class LoginForm extends Component {
       username: this.state.username,
       hash: this.state.password
     };
-    const response = await axios.post('/api/users/add', { user });
+    await axios.post('/api/users/add', { user });
   };
 
   render() {
