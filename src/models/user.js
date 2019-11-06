@@ -7,4 +7,6 @@ const UserSchema = new Schema({
   artists: Array
 });
 
-module.exports = { UserSchema };
+const User = mongoose.model('User', UserSchema);
+
+module.exports = { User };
