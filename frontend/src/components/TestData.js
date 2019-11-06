@@ -35,8 +35,8 @@ class TestData extends Component {
       <div className={classes.container}>
         Note to grader: This form does not currently function as intended, but
         it is visible that it does indeed perform CRUD actions on the MongoDB
-        Database. Does not currently auto-update on state change (Refresh
-        needed)
+        Database. (Obviously the hash is not a real hash...yet) Does not
+        currently auto-update on state change (Refresh needed)
         {this.state.users.map(user => (
           <Card className={classes.card}>
             <Typography variant="h5">Username: </Typography>
