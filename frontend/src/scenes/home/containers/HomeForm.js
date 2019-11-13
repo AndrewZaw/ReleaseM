@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -21,10 +21,10 @@ const styles = theme => ({
   }
 });
 
-class LoginForm extends Component {
+class HomeForm extends Component {
   state = {
-    username: '',
-    password: ''
+    artistName: '',
+    songName: ''
   };
 
   handleChange(e) {
@@ -33,12 +33,12 @@ class LoginForm extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const user = {
-      username: this.state.username,
-      hash: this.state.password
+    const artist = {
+      artistName: this.state.artistName,
+      songName: this.state.songName
     };
-    await axios.post('/api/users/add', { user });
-    await this.props.handleSubmit(user);
+    await axios.post('/api/artists/add', { artist });
+    await this.props.handleSubmit(artist);
   }
 
   render() {
@@ -50,19 +50,19 @@ class LoginForm extends Component {
       >
         <TextField
           onChange={this.handleChange.bind(this)}
-          id="username"
-          name="username"
+          id="artistName"
+          name="artistName"
           className={classes.textField}
-          label="Username"
+          label="artistName"
           margin="normal"
         />
         <TextField
           onChange={this.handleChange.bind(this)}
-          id="password"
-          name="password"
+          id="songName"
+          name="songName"
           className={classes.textField}
-          label="Password"
-          type="password"
+          label="songName"
+          type="songName"
           margin="normal"
         />
         <br />
@@ -79,4 +79,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(styles)(HomeForm);

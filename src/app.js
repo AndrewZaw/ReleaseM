@@ -7,7 +7,7 @@ require('dotenv').config();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const { User } = require('./models/user');
+const { User, Artist } = require('./models');
 
 app.get('/api/users', (req, res) => {
   User.find({}, (err, users) => {
@@ -22,14 +22,32 @@ app.get('/api/users', (req, res) => {
 app.post('/api/users/add', (req, res) => {
   const user = req.body.user;
   if (user.username && user.hash) {
-    new User({ username: user.username, hash: user.hash }).save((err, user) => {
-      if (err) {
-        console.log(err);
-        res.redirect('/');
-      }
-    });
+    new User({ username: user.username, hash: user.hash })
+      .save()
+      .then(res.send(user));
   } else {
-    res.redirect('/');
+    res.send('error');
+  }
+});
+
+app.get('/api/artists', (req, res) => {
+  Artist.find({}, (err, artists) => {
+    if (err) {
+      res.send('error');
+      return err;
+    }
+    res.send({ artists });
+  });
+});
+
+app.post('/api/artists/add', (req, res) => {
+  const artist = req.body.artist;
+  if (artist.artistName && artist.songName) {
+    new Artist({ artistName: artist.artistName, songName: artist.songName })
+      .save()
+      .then(res.send(artist));
+  } else {
+    res.send('error');
   }
 });
 
