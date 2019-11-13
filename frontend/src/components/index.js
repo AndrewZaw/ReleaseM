@@ -1,5 +1,3 @@
-import AppBar from './AppBar.js';
-import LoginForm from './LoginForm';
-import TestData from './TestData';
+import AppBar from './AppBar';
 
-export { AppBar, LoginForm, TestData };
+export { AppBar };
