@@ -37,14 +37,20 @@ class TestData extends Component {
         it is visible that it does indeed perform CRUD actions on the MongoDB
         Database. (Obviously the hash is not a real hash...yet) Does not
         currently auto-update on state change (Refresh needed)
-        {this.state.users.map(user => (
+        {this.state.users ? (
+          this.state.users.map(user => (
+            <Card className={classes.card}>
+              <Typography variant="h5">Username: </Typography>
+              {user.username}
+              <Typography variant="h5">Hash: </Typography>
+              {user.hash}
+            </Card>
+          ))
+        ) : (
           <Card className={classes.card}>
-            <Typography variant="h5">Username: </Typography>
-            {user.username}
-            <Typography variant="h5">Hash: </Typography>
-            {user.hash}
+            <Typography variant="h5">Nothing :(</Typography>
           </Card>
-        ))}
+        )}
       </div>
     );
   }

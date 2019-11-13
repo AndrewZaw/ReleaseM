@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Login from '../scenes/login/Login';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -17,6 +17,8 @@ const styles = theme => ({
     marginRight: 20
   },
   title: {
+    textDecoration: 'none',
+    color: '#fff',
     flexGrow: 1
   }
 });
@@ -26,28 +28,29 @@ class AppBar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Router>
-          <MaterialAppBar position="static">
-            <Toolbar>
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h4" className={classes.title}>
-                ReleaseM
-              </Typography>
-              <Route>
-                <Button color="inherit" to="/">
-                  Login
-                </Button>
-              </Route>
-            </Toolbar>
-          </MaterialAppBar>
-        </Router>
+        <MaterialAppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h4"
+              className={classes.title}
+            >
+              ReleaseM
+            </Typography>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+          </Toolbar>
+        </MaterialAppBar>
       </div>
     );
   }
