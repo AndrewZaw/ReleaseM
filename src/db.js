@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-// Schemas
-const { UserSchema } = require('./models/user');
-mongoose.model('User', UserSchema);
-
 const getURI = () => {
   const { mongoURI } = require('../config');
   return mongoURI;
@@ -20,4 +16,4 @@ const connectToDB = async () => {
   }
 };
 
-module.exports = { connectToDB };
+connectToDB();
