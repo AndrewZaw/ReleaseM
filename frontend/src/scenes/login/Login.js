@@ -38,7 +38,7 @@ class Login extends Component {
     const { classes } = this.props;
     return (
       <Container className={classes.root}>
-        <LoginForm handleSubmit={this.handleSubmit.bind(this)} />
+        <LoginForm className={classes.form} handleSubmit={this.handleSubmit.bind(this)} />
         <Typography variant="body1" component={Link} className={classes.link} to="/register">
           Don't have an account? Register here!
         </Typography>

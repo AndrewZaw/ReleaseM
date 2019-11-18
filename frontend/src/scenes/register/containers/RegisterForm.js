@@ -5,11 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
 const styles = theme => ({
-  container: {
+  form: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    margin: theme.spacing(3)
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -17,7 +18,7 @@ const styles = theme => ({
     width: 280
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(3),
     width: 100
   }
 });
@@ -73,7 +74,7 @@ class RegisterForm extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <form className={classes.container} onSubmit={this.handleSubmit.bind(this)}>
+      <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
         <TextField
           onChange={this.handleChange.bind(this)}
           id="username"
@@ -82,7 +83,7 @@ class RegisterForm extends Component {
           label="Username"
           margin="normal"
           error={!this.isUsernameValid()}
-          helperText={this.isUsernameValid() ? '' : 'Username must be at least 5 characters long'}
+          helperText="Username must be at least 5 characters long"
         />
         <TextField
           onChange={this.handleChange.bind(this)}
@@ -103,7 +104,7 @@ class RegisterForm extends Component {
           type={this.state.showPassword ? 'text' : 'password'}
           margin="normal"
           error={!this.isPasswordValid()}
-          helperText={this.isPasswordValid() ? '' : 'Password must be at least 8 characters long'}
+          helperText="Password must be at least 8 characters long"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

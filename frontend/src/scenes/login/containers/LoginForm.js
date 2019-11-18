@@ -9,7 +9,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    margin: theme.spacing(3)
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -17,7 +18,7 @@ const styles = theme => ({
     width: 280
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(3),
     width: 100
   }
 });
@@ -55,52 +56,50 @@ class LoginForm extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container className={classes.container}>
-        <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
-          <TextField
-            onChange={this.handleChange.bind(this)}
-            id="username"
-            name="username"
-            className={classes.textField}
-            label="Username"
-            margin="normal"
-          />
-          <TextField
-            onChange={this.handleChange.bind(this)}
-            id="email"
-            name="email"
-            className={classes.textField}
-            label="Email"
-            margin="normal"
-          />
-          <TextField
-            onChange={this.handleChange.bind(this)}
-            id="password"
-            name="password"
-            className={classes.textField}
-            label="Password"
-            type={this.state.showPassword ? 'text' : 'password'}
-            margin="normal"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={this.handleClickShowPassword.bind(this)}
-                    onMouseDown={this.handleMouseDownPassword.bind(this)}
-                  >
-                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <br />
-          <Button type="submit" variant="contained" color="primary" className={classes.button}>
-            Submit
-          </Button>
-        </form>
-      </Container>
+      <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
+        <TextField
+          onChange={this.handleChange.bind(this)}
+          id="username"
+          name="username"
+          className={classes.textField}
+          label="Username"
+          margin="normal"
+        />
+        <TextField
+          onChange={this.handleChange.bind(this)}
+          id="email"
+          name="email"
+          className={classes.textField}
+          label="Email"
+          margin="normal"
+        />
+        <TextField
+          onChange={this.handleChange.bind(this)}
+          id="password"
+          name="password"
+          className={classes.textField}
+          label="Password"
+          type={this.state.showPassword ? 'text' : 'password'}
+          margin="normal"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={this.handleClickShowPassword.bind(this)}
+                  onMouseDown={this.handleMouseDownPassword.bind(this)}
+                >
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+        <br />
+        <Button type="submit" variant="contained" color="primary" className={classes.button}>
+          Submit
+        </Button>
+      </form>
     );
   }
 }
