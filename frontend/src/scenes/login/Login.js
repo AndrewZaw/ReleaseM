@@ -13,7 +13,8 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   link: {
-    marginTop: '1em'
+    fontWeight: '500',
+    marginTop: theme.spacing(2)
   }
 });
 
@@ -38,7 +39,7 @@ class Login extends Component {
     return (
       <Container className={classes.root}>
         <LoginForm handleSubmit={this.handleSubmit.bind(this)} />
-        <Typography variant="h6" component={Link} className={classes.link} to="/register">
+        <Typography variant="body1" component={Link} className={classes.link} to="/register">
           Don't have an account? Register here!
         </Typography>
       </Container>
