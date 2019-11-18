@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { LoginForm } from './containers';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const styles = theme => ({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  link: {
+    marginTop: '1em'
   }
 });
 
@@ -33,6 +38,9 @@ class Login extends Component {
     return (
       <Container className={classes.root}>
         <LoginForm handleSubmit={this.handleSubmit.bind(this)} />
+        <Typography variant="h6" component={Link} className={classes.link} to="/register">
+          Don't have an account? Register here!
+        </Typography>
       </Container>
     );
   }
