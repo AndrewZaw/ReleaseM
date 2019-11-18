@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
@@ -13,7 +14,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200
+    width: 280
   },
   button: {
     margin: theme.spacing(1),
@@ -23,8 +24,10 @@ const styles = theme => ({
 
 class LoginForm extends Component {
   state = {
+    email: '',
     username: '',
-    password: ''
+    password: '',
+    showPassword: false
   };
 
   handleChange(e) {
@@ -41,13 +44,36 @@ class LoginForm extends Component {
     await this.props.handleSubmit(user);
   }
 
+  isEmailValid() {
+    const email = this.state.email;
+    const validEmail = /\S+@\S+\.\S+/;
+    return email.length < 1 || validEmail.test(email);
+  }
+
+  isUsernameValid() {
+    const username = this.state.username;
+    const minimumUsernameLength = 5;
+    return username.length === 0 || username.length >= minimumUsernameLength;
+  }
+
+  isPasswordValid() {
+    const password = this.state.password;
+    const minimumPasswordLength = 8;
+    return password.length === 0 || password.length >= minimumPasswordLength;
+  }
+
+  handleClickShowPassword() {
+    this.setState(prevState => ({ showPassword: !prevState.showPassword }));
+  }
+
+  handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <form
-        className={classes.container}
-        onSubmit={this.handleSubmit.bind(this)}
-      >
+      <form className={classes.container} onSubmit={this.handleSubmit.bind(this)}>
         <TextField
           onChange={this.handleChange.bind(this)}
           id="username"
@@ -55,6 +81,18 @@ class LoginForm extends Component {
           className={classes.textField}
           label="Username"
           margin="normal"
+          error={!this.isUsernameValid()}
+          helperText={this.isUsernameValid() ? '' : 'Username must be at least 5 characters long'}
+        />
+        <TextField
+          onChange={this.handleChange.bind(this)}
+          id="email"
+          name="email"
+          className={classes.textField}
+          label="Email"
+          margin="normal"
+          error={!this.isEmailValid()}
+          helperText={this.isEmailValid() ? '' : 'Please enter a valid email address'}
         />
         <TextField
           onChange={this.handleChange.bind(this)}
@@ -62,16 +100,26 @@ class LoginForm extends Component {
           name="password"
           className={classes.textField}
           label="Password"
-          type="password"
+          type={this.state.showPassword ? 'text' : 'password'}
           margin="normal"
+          error={!this.isPasswordValid()}
+          helperText={this.isPasswordValid() ? '' : 'Password must be at least 8 characters long'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={this.handleClickShowPassword.bind(this)}
+                  onMouseDown={this.handleMouseDownPassword.bind(this)}
+                >
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <br />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
+        <Button type="submit" variant="contained" color="primary" className={classes.button}>
           Submit
         </Button>
       </form>

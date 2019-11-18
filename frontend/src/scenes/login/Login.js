@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { Container } from '@material-ui/core';
-import { LoginForm, TestData } from './containers';
+import { LoginForm } from './containers';
+import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
 
 class Login extends Component {
   state = {
@@ -20,13 +29,13 @@ class Login extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <Container>
+      <Container className={classes.root}>
         <LoginForm handleSubmit={this.handleSubmit.bind(this)} />
-        <TestData users={this.state.users} />
       </Container>
     );
   }
 }
 
-export default Login;
+export default withStyles(styles)(Login);
