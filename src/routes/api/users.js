@@ -17,7 +17,11 @@ router.get('/', (req, res) => {
 router.post('/add', async (req, res) => {
   const user = req.body.user;
   if (user.email && user.username && user.password) {
-    await User.create(createUserObject(user));
+    try {
+      await User.create(createUserObject(user));
+    } catch {
+      res.send('error');
+    }
     res.send(user);
     res.redirect('/login');
   }
