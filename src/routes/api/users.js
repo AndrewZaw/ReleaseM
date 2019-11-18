@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
 
+const createUserObject = user => ({ email: user.email, username: user.username, password: user.password });
+
 router.get('/', (req, res) => {
   User.find({}, (err, users) => {
     if (err) {
@@ -12,14 +14,12 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
   const user = req.body.user;
-  if (user.username && user.hash) {
-    new User({ username: user.username, hash: user.hash })
-      .save()
-      .then(res.send(user));
-  } else {
-    res.send('error');
+  if (user.email && user.username && user.password) {
+    await User.create(createUserObject(user));
+    res.send(user);
+    res.redirect('/login');
   }
 });
 
