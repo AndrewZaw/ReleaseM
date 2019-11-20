@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialAppBar from '@material-ui/core/AppBar';
 import { Toolbar, Typography, Button, IconButton, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Inbox, Menu } from '@material-ui/icons';
+import { Inbox, Menu, Settings } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -32,20 +32,22 @@ class AppBar extends Component {
     this.setState({ drawerOpen: open });
   };
 
+  renderSettings() {
+    return (
+      <ListItem button key={'Settings'}>
+        <ListItemIcon>
+          <Settings />
+        </ListItemIcon>
+        <ListItemText primary={'Settings'} />
+      </ListItem>
+    );
+  }
+
   renderList() {
     const { classes } = this.props;
     return (
       <div className={classes.list} role="presentation" onClick={this.toggleDrawer(false)} onKeyDown={this.toggleDrawer(false)}>
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                <Inbox />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <List>{this.renderSettings()}</List>
         <Divider />
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
