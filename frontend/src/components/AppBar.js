@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialAppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import { Toolbar, Typography, Button, IconButton, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Inbox, Menu, Settings } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -23,26 +20,63 @@ const styles = theme => ({
 });
 
 class AppBar extends Component {
+  state = {
+    drawerOpen: false
+  };
+
+  toggleDrawer = open => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    this.setState({ drawerOpen: open });
+  };
+
+  renderSettings() {
+    return (
+      <ListItem button key={'Settings'}>
+        <ListItemIcon>
+          <Settings />
+        </ListItemIcon>
+        <ListItemText primary={'Settings'} />
+      </ListItem>
+    );
+  }
+
+  renderList() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.list} role="presentation" onClick={this.toggleDrawer(false)} onKeyDown={this.toggleDrawer(false)}>
+        <List>{this.renderSettings()}</List>
+        <Divider />
+        <List>
+          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+          {this.renderList()}
+        </Drawer>
         <MaterialAppBar position="static">
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
+            <IconButton onClick={this.toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <Menu />
             </IconButton>
-            <Typography
-              component={Link}
-              to="/"
-              variant="h4"
-              className={classes.title}
-            >
+
+            <Typography component={Link} to="/" variant="h4" className={classes.title}>
               ReleaseM
             </Typography>
             <Button color="inherit" component={Link} to="/login">
