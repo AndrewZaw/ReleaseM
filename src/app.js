@@ -1,13 +1,20 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-require('./db');
+const cors = require('cors');
+const corsOptions = require('./corsOptions');
 require('dotenv').config();
+// Database
+require('./db');
+
+// Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/songs', require('./routes/api/songs'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
