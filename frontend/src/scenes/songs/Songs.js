@@ -30,8 +30,7 @@ class Songs extends Component {
     const dateLimit = this.getPreviousDate(30);
     console.log(dateLimit);
     songs.filter(song => {
-      console.log(song.album.release_date);
-      console.log(dateLimit);
+      console.log(song.album.release_date, dateLimit);
       console.log(song.album.release_date < dateLimit);
       return song.album.release_date < dateLimit;
     });
