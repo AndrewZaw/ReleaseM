@@ -7,28 +7,53 @@ class Songs extends Component {
     songs: []
   };
 
+  getPreviousDate = days => {
+    const today = new Date();
+    const returnDate = new Date(new Date().setDate(today.getDate() - days))
+      .toISOString()
+      .slice(0, 10);
+    return returnDate;
+  };
+
   async componentDidMount() {
     const songs = await this.getSongs();
     this.setState({
-      songs: songs[0]
+      songs: songs
     });
     console.log(this.state.songs);
   }
 
   async getSongs() {
-    const response = await axios.get('/api/songs');
-    return response.data;
+    const artists = ['drake'];
+    const response = await axios.post('/api/songs', { artists });
+    const songs = response.data;
+    const dateLimit = this.getPreviousDate(30);
+    console.log(dateLimit);
+    songs.filter(song => {
+      console.log(song.album.release_date);
+      console.log(dateLimit);
+      console.log(song.album.release_date < dateLimit);
+      return song.album.release_date < dateLimit;
+    });
+    songs.sort((songOne, songTwo) => {
+      return songOne.album.release_date < songTwo.album.release_date ? 1 : -1;
+    });
+    return songs;
   }
 
   render() {
     return (
       <Container>
-        {this.state.songs.map((song, i) => (
-          <Card key={i}>
-            {song.name} by{' '}
-            {JSON.stringify(song.artists.map(artist => artist.name))}
-          </Card>
-        ))}
+        {this.state.songs ? (
+          this.state.songs.map((song, i) => (
+            <Card key={i}>
+              {song.name} by{' '}
+              {JSON.stringify(song.artists.map(artist => artist.name))}
+            </Card>
+          ))
+        ) : (
+          <Card>nothing :(</Card>
+        )}
       </Container>
     );
   }

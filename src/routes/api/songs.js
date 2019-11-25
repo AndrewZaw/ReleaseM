@@ -27,26 +27,33 @@ const getToken = async () => {
   return token;
 };
 
-const getSongs = async (token, artist, offset = 0, amount = 50) => {
-  const url = `https://api.spotify.com/v1/search?q=${artist}&type=track&limit=${amount}&offset=${offset}`;
-  const response = await axios({
-    url,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  console.log(response.data.tracks.items);
-  return response.data.tracks.items;
+const getSongs = async (token, artist, amount = 50) => {
+  let songs = [];
+  for (let i = 0; i < amount; i += 50) {
+    const url = `https://api.spotify.com/v1/search?q=${artist}&type=track&limit=50&offset=${i}`;
+    const response = await axios({
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    songs = [...songs, ...response.data.tracks.items];
+  }
+  return songs;
 };
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const songs = [];
+    const artists = req.body.artists;
     const token = await getToken();
-    songs.push(await getSongs(token, 'drake'));
-    res.send(songs);
+    const songs = await artists.reduce(async (songs, artist) => {
+      songs.push(await getSongs(token, artist, 500));
+      return songs;
+    }, []);
+    console.log(songs[0]);
+    res.send(songs[0]);
   } catch {
-    console.log('Could not reach API');
+    console.log('Error getting songs');
   }
 });
 
