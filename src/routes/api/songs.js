@@ -46,12 +46,12 @@ router.post('/', async (req, res) => {
   try {
     const artists = req.body.artists;
     const token = await getToken();
-    const songs = await artists.reduce(async (songs, artist) => {
-      songs.push(await getSongs(token, artist, 500));
-      return songs;
-    }, []);
-    console.log(songs[0]);
-    res.send(songs[0]);
+    let songs = [];
+    for (artist of artists) {
+      const newSongs = await getSongs(token, artist, 150);
+      songs = [...songs, ...newSongs];
+    }
+    res.send(songs);
   } catch {
     console.log('Error getting songs');
   }

@@ -24,15 +24,13 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['drake'];
+    const artists = ['illenium', 'drake'];
     const response = await axios.post('/api/songs', { artists });
-    const songs = response.data;
+    let songs = response.data;
+    console.log(songs)
     const dateLimit = this.getPreviousDate(30);
-    console.log(dateLimit);
-    songs.filter(song => {
-      console.log(song.album.release_date, dateLimit);
-      console.log(song.album.release_date < dateLimit);
-      return song.album.release_date < dateLimit;
+    songs = songs.filter(song => {
+      return song.album.release_date > dateLimit;
     });
     songs.sort((songOne, songTwo) => {
       return songOne.album.release_date < songTwo.album.release_date ? 1 : -1;
