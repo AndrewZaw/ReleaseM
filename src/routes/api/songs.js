@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     const token = await getToken();
     let songs = [];
     for (let artist of artists) {
-      const newSongs = await getSongs(token, artist.toLowerCase(), 300);
+      const newSongs = await getSongs(token, artist.toLowerCase(), 500);
       songs = [...songs, ...newSongs];
     }
     res.send(songs);

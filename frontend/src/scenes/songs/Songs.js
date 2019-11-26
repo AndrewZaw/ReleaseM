@@ -29,6 +29,20 @@ class Songs extends Component {
       songOne.album.release_date < songTwo.album.release_date ? 1 : -1
     );
 
+  isSongInArray = (array, songName) =>
+    array.find(song => song.name === songName);
+
+  filterDuplicates = songs => {
+    songs = songs.reverse();
+    songs = songs.reduce((duplicatesRemoved, song) => {
+      if (!this.isSongInArray(duplicatesRemoved, song.name)) {
+        duplicatesRemoved.push(song);
+      }
+      return duplicatesRemoved;
+    }, []);
+    return songs.reverse();
+  };
+
   async componentDidMount() {
     const songs = await this.getSongs();
     this.setState({
@@ -38,11 +52,13 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['gunna'];
+    const artists = ['drake', 'migos'];
+    const daysBack = 90;
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
     songs = this.filterCorrectArtists(songs, artists);
-    const dateLimit = this.getPreviousDate(30);
+    songs = this.filterDuplicates(songs);
+    const dateLimit = this.getPreviousDate(daysBack);
     songs = this.filterDateLimit(songs, dateLimit);
     songs = this.sortByReleaseDate(songs);
     return songs;
