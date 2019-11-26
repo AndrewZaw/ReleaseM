@@ -15,6 +15,20 @@ class Songs extends Component {
     return returnDate;
   };
 
+  filterCorrectArtists = (songs, artists) => {
+    return songs.filter(song =>
+      song.artists.some(artist => artists.includes(artist.name.toLowerCase()))
+    );
+  };
+
+  filterDateLimit = (songs, dateLimit) =>
+    songs.filter(song => song.album.release_date > dateLimit);
+
+  sortByReleaseDate = songs =>
+    songs.sort((songOne, songTwo) =>
+      songOne.album.release_date < songTwo.album.release_date ? 1 : -1
+    );
+
   async componentDidMount() {
     const songs = await this.getSongs();
     this.setState({
@@ -24,17 +38,13 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['illenium', 'drake'];
+    const artists = ['gunna'];
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
-    console.log(songs)
+    songs = this.filterCorrectArtists(songs, artists);
     const dateLimit = this.getPreviousDate(30);
-    songs = songs.filter(song => {
-      return song.album.release_date > dateLimit;
-    });
-    songs.sort((songOne, songTwo) => {
-      return songOne.album.release_date < songTwo.album.release_date ? 1 : -1;
-    });
+    songs = this.filterDateLimit(songs, dateLimit);
+    songs = this.sortByReleaseDate(songs);
     return songs;
   }
 
