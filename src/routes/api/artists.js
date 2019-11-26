@@ -25,33 +25,25 @@ const getToken = async () => {
   return token;
 };
 
-const getSongs = async (token, artist, amount = 50) => {
-  let songs = [];
-  for (let i = 0; i < amount; i += 50) {
-    const url = `https://api.spotify.com/v1/search?q=${artist}&type=track&limit=50&offset=${i}`;
-    const response = await axios({
-      url,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    songs = [...songs, ...response.data.tracks.items];
-  }
-  return songs;
+const getArtists = async (token, artist) => {
+  const url = `https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=20`;
+  const response = await axios({
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  const artists = response.data.artists.items;
+  return artists;
 };
 
 router.post('/', async (req, res) => {
   try {
-    const artists = req.body.artists;
     const token = await getToken();
-    let songs = [];
-    for (let artist of artists) {
-      const newSongs = await getSongs(token, artist.toLowerCase(), 500);
-      songs = [...songs, ...newSongs];
-    }
-    res.send(songs);
+    const artists = await getArtists(token, 'drake');
+    res.send(artists);
   } catch {
-    console.log('Error getting songs');
+    console.log('Error getting artists');
   }
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar } from './components';
-import { Home, Login, Register, Songs } from './scenes';
+import { Home, Login, Register, Songs, Artists } from './scenes';
 import './App.css';
 import 'typeface-roboto';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -15,6 +15,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/songs" component={Songs} />
+          <Route path="/artists" component={Artists} />
           <Route path="/about" />
         </Switch>
       </div>
