@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-const { clientId } = require(process.env.clientId || '../../../config');
-const { clientSecret } = require(process.env.clientSecret || '../../../config');
+const { clientId } = process.env.clientId || require('../../../config');
+const { clientSecret } = process.env.clientSecret || require('../../../config');
 const redirectUri = 'https://releasem.herokuapp.com/';
 const authOptions = 'sfds';
 
