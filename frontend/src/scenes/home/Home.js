@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Typography, Card } from '@material-ui/core';
+import { Container, Typography, Card, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -22,7 +23,16 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-    return <Container>Homepage</Container>;
+    return (
+      <Container>
+        <Button color="inherit" component={Link} to="/artists">
+          Artists
+        </Button>
+        <Button color="inherit" component={Link} to="/songs">
+          Songs
+        </Button>
+      </Container>
+    );
   }
 }
 

@@ -48,7 +48,7 @@ class ArtistForm extends Component {
     const response = await axios.post('/api/artists', {
       artist: this.state.artist
     });
-    const artists = response.data[0];
+    const artists = response.data;
     console.log(artists);
     this.props.handleSubmit(artists);
   }
