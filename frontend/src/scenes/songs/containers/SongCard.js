@@ -36,52 +36,48 @@ const styles = theme => ({
   }
 });
 
-class ArtistCard extends Component {
+class SongCard extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card}>
+      <Card className={classes.card} key={this.props.key}>
         <Grid
           container
           direction="row"
           justify="flex-start"
           alignItems="center"
         >
+          <Grid item xs={5}>
+            <CardContent>
+              <Typography className={classes.songName} variant="h5">
+                {this.props.songName}
+              </Typography>
+            </CardContent>
+          </Grid>
           <Grid item xs={2}>
-            <CardMedia
-              className={classes.media}
-              image={this.props.img}
-              title={this.props.name}
-            />
-          </Grid>
-          <Grid item xs={4}>
             <CardContent>
-              <Typography className={classes.artistName} variant="h4">
-                {this.props.name}
+              <Typography className={classes.artistNames}>
+                {this.props.releaseDate}
               </Typography>
+            </CardContent>
+          </Grid>
+          <Grid item xs={2}>
+            <CardContent>
+              <Typography>{this.props.albumName}</Typography>
             </CardContent>
           </Grid>
           <Grid item xs={3}>
             <CardContent>
-              <Typography>
-                {this.props.monthlyListeners} monthly listeners
-              </Typography>
+              {this.props.artists.map((artist, i) => (
+                <Typography
+                  key={i}
+                  className={classes.artistNames}
+                  variant="h6"
+                >
+                  {artist.name}
+                </Typography>
+              ))}
             </CardContent>
-          </Grid>
-          <Grid item xs={3}>
-            <CardActions className={classes.buttonArea}>
-              <Button color="secondary" className={classes.button}>
-                Add to Your Artists
-              </Button>
-              <Button
-                color="primary"
-                className={classes.button}
-                target="_blank"
-                href={this.props.profileUrl}
-              >
-                See Profile on Spotify
-              </Button>
-            </CardActions>
           </Grid>
         </Grid>
       </Card>
@@ -89,4 +85,4 @@ class ArtistCard extends Component {
   }
 }
 
-export default withStyles(styles)(ArtistCard);
+export default withStyles(styles)(SongCard);

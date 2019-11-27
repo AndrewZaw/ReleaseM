@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Container, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import {
+  Container,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton
+} from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -34,7 +40,7 @@ class LoginForm extends Component {
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-  // TODO: change this
+
   async handleSubmit(event) {
     event.preventDefault();
     const user = {
@@ -96,7 +102,12 @@ class LoginForm extends Component {
           }}
         />
         <br />
-        <Button type="submit" variant="contained" color="primary" className={classes.button}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
           Submit
         </Button>
       </form>

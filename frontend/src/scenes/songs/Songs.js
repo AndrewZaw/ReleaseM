@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Container, Card, CardContent, Typography } from '@material-ui/core';
+import SongCard from './containers/SongCard';
+import SongForm from './containers/SongForm';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -19,8 +21,14 @@ const styles = theme => ({
 });
 
 class Songs extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   state = {
-    songs: []
+    songs: [],
+    daysBack: 30
   };
 
   getPreviousDate = days => {
@@ -49,7 +57,6 @@ class Songs extends Component {
     array.find(song => song.name === songName);
 
   filterDuplicates = songs => {
-    console.log(songs);
     songs = songs.reverse();
     songs = songs.reduce((duplicatesRemoved, song) => {
       if (!this.isSongInArray(duplicatesRemoved, song.name)) {
@@ -60,6 +67,10 @@ class Songs extends Component {
     return songs.reverse();
   };
 
+  handleSubmit(daysBack) {
+    this.setState({ daysBack: daysBack });
+  }
+
   async componentDidMount() {
     const songs = await this.getSongs();
     this.setState({
@@ -68,15 +79,22 @@ class Songs extends Component {
     console.log(this.state.songs);
   }
 
+  async componentDidUpdate() {
+    const songs = await this.getSongs();
+    this.setState({
+      songs: songs
+    });
+    console.log(this.state.songs);
+  }
+
   async getSongs() {
-    const artists = ['migos'];
-    const daysBack = 180;
+    const artists = ['drake'];
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
     songs = this.filterCorrectArtists(songs, artists);
     songs = this.sortByReleaseDate(songs);
     songs = this.filterDuplicates(songs);
-    const dateLimit = this.getPreviousDate(daysBack);
+    const dateLimit = this.getPreviousDate(this.state.daysBack);
     songs = this.filterDateLimit(songs, dateLimit);
     return songs;
   }
@@ -85,16 +103,17 @@ class Songs extends Component {
     const { classes } = this.props;
     return (
       <Container>
+        <SongForm handleSubmit={this.handleSubmit} />
         {this.state.songs ? (
           this.state.songs.map((song, i) => (
-            <Card className={classes.card} key={i}>
-              <CardContent>
-                <Typography className={classes.songName} variant="h5">
-                  {song.name} by{' '}
-                  {JSON.stringify(song.artists.map(artist => artist.name))}
-                </Typography>
-              </CardContent>
-            </Card>
+            <SongCard
+              key={i}
+              songName={song.name}
+              artists={song.artists}
+              releaseDate={song.album.release_date}
+              spotifyUrl={song.external_urls.spotify}
+              albumName={song.album.name}
+            />
           ))
         ) : (
           <Card>nothing :(</Card>

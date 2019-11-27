@@ -5,11 +5,14 @@ import ArtistCard from './containers/ArtistCard';
 import axios from 'axios';
 
 class Artists extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   state = {
     artists: []
   };
-
-  async componentDidMount() {}
 
   handleSubmit(artists) {
     this.setState({ artists: artists });
@@ -18,7 +21,7 @@ class Artists extends Component {
   render() {
     return (
       <Container>
-        <ArtistForm handleSubmit={this.handleSubmit.bind(this)} />
+        <ArtistForm handleSubmit={this.handleSubmit} />
         {this.state.artists ? (
           this.state.artists.map((artist, i) => {
             return (
@@ -26,6 +29,8 @@ class Artists extends Component {
                 key={i}
                 name={artist.name}
                 img={artist.images[0] ? artist.images[0].url : ''}
+                profileUrl={artist.external_urls.spotify}
+                monthlyListeners={artist.followers.total.toLocaleString()}
               />
             );
           })
