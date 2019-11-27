@@ -40,7 +40,9 @@ const getArtists = async (token, artist) => {
 router.post('/', async (req, res) => {
   try {
     const token = await getToken();
+    console.log(token);
     const artists = await getArtists(token, req.body.artist);
+    console.log(artists);
     res.send(artists);
   } catch {
     console.log('Error getting artists');
