@@ -17,8 +17,8 @@ const styles = theme => ({
     boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
     margin: '2em'
   },
-  artistName: {
-    fontWeight: '300'
+  artistNames: {
+    textAlign: 'right'
   },
   buttonArea: {
     display: 'flex',
@@ -56,9 +56,7 @@ class SongCard extends Component {
           </Grid>
           <Grid item xs={2}>
             <CardContent>
-              <Typography className={classes.artistNames}>
-                {this.props.releaseDate}
-              </Typography>
+              <Typography>{this.props.releaseDate}</Typography>
             </CardContent>
           </Grid>
           <Grid item xs={2}>
@@ -67,7 +65,7 @@ class SongCard extends Component {
             </CardContent>
           </Grid>
           <Grid item xs={3}>
-            <CardContent>
+            <CardContent className={classes.artistNames}>
               {this.props.artists.map((artist, i) => (
                 <Typography
                   key={i}

@@ -6,17 +6,8 @@ import SongForm from './containers/SongForm';
 import axios from 'axios';
 
 const styles = theme => ({
-  card: {
-    boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
-    margin: '2em'
-  },
-  songName: {
-    fontWeight: '500'
-  },
-  media: {
-    margin: '1em',
-    height: 150,
-    width: 150
+  text: {
+    textAlign: 'center'
   }
 });
 
@@ -88,7 +79,7 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['drake'];
+    const artists = ['drake', 'migos'];
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
     songs = this.filterCorrectArtists(songs, artists);
@@ -102,8 +93,12 @@ class Songs extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container>
+      <Container className={classes.root}>
         <SongForm handleSubmit={this.handleSubmit} />
+        <Typography className={classes.text}>
+          By default, only songs up to a month old are shown. This can be
+          adjusted with the form above.
+        </Typography>
         {this.state.songs ? (
           this.state.songs.map((song, i) => (
             <SongCard
