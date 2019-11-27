@@ -4,7 +4,8 @@ const axios = require('axios');
 
 const { clientId } = process.env.clientId || require('../../../config');
 const { clientSecret } = process.env.clientSecret || require('../../../config');
-
+console.log(clientId);
+console.log(clientSecret);
 const getToken = async () => {
   const response = await axios({
     url: 'https://accounts.spotify.com/api/token',
@@ -22,6 +23,7 @@ const getToken = async () => {
     }
   });
   const token = response.data.access_token;
+  console.log(token);
   return token;
 };
 
