@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
   Typography,
   Button,
+  Grid,
   Card,
   CardContent,
   CardActionArea,
@@ -20,7 +21,17 @@ const styles = theme => ({
   artistName: {
     fontWeight: '300'
   },
-  media: { height: 200, width: 200 }
+  buttonArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  media: {
+    margin: '1em',
+    height: 150,
+    width: 150
+  }
 });
 
 class ArtistCard extends Component {
@@ -28,19 +39,33 @@ class ArtistCard extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={this.props.img}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography className={classes.artistName} variant="h5">
-            {this.props.name}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button>Add to Your Artists</Button>
-        </CardActions>
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Grid item xs={3}>
+            <CardMedia
+              className={classes.media}
+              image={this.props.img}
+              title={this.props.name}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <CardContent>
+              <Typography className={classes.artistName} variant="h4">
+                {this.props.name}
+              </Typography>
+            </CardContent>
+          </Grid>
+          <Grid item xs={3}>
+            <CardActions className={classes.buttonArea}>
+              <Button>Add to Your Artists</Button>
+              <Button>See Profile</Button>
+            </CardActions>
+          </Grid>
+        </Grid>
       </Card>
     );
   }

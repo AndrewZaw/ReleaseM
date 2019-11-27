@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
-import { Container, Card } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Container, Card, CardContent, Typography } from '@material-ui/core';
 import axios from 'axios';
+
+const styles = theme => ({
+  card: {
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
+    margin: '2em'
+  },
+  songName: {
+    fontWeight: '500'
+  },
+  media: {
+    margin: '1em',
+    height: 150,
+    width: 150
+  }
+});
 
 class Songs extends Component {
   state = {
@@ -33,6 +49,7 @@ class Songs extends Component {
     array.find(song => song.name === songName);
 
   filterDuplicates = songs => {
+    console.log(songs);
     songs = songs.reverse();
     songs = songs.reduce((duplicatesRemoved, song) => {
       if (!this.isSongInArray(duplicatesRemoved, song.name)) {
@@ -52,26 +69,31 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['drake', 'migos'];
-    const daysBack = 90;
+    const artists = ['migos'];
+    const daysBack = 180;
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
     songs = this.filterCorrectArtists(songs, artists);
+    songs = this.sortByReleaseDate(songs);
     songs = this.filterDuplicates(songs);
     const dateLimit = this.getPreviousDate(daysBack);
     songs = this.filterDateLimit(songs, dateLimit);
-    songs = this.sortByReleaseDate(songs);
     return songs;
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <Container>
         {this.state.songs ? (
           this.state.songs.map((song, i) => (
-            <Card key={i}>
-              {song.name} by{' '}
-              {JSON.stringify(song.artists.map(artist => artist.name))}
+            <Card className={classes.card} key={i}>
+              <CardContent>
+                <Typography className={classes.songName} variant="h5">
+                  {song.name} by{' '}
+                  {JSON.stringify(song.artists.map(artist => artist.name))}
+                </Typography>
+              </CardContent>
             </Card>
           ))
         ) : (
@@ -82,4 +104,4 @@ class Songs extends Component {
   }
 }
 
-export default Songs;
+export default withStyles(styles)(Songs);
