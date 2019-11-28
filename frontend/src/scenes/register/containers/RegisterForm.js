@@ -3,7 +3,8 @@ import {
   TextField,
   Button,
   InputAdornment,
-  IconButton
+  IconButton,
+  Typography
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -41,7 +42,8 @@ class RegisterForm extends Component {
     email: '',
     username: '',
     password: '',
-    showPassword: false
+    showPassword: false,
+    statusText: ''
   };
 
   handleChange(e) {
@@ -55,7 +57,13 @@ class RegisterForm extends Component {
       password: this.state.password,
       email: this.state.email
     };
-    await axios.post('/api/auth/register', { user });
+    try {
+      await axios.post('/api/auth/register', { user });
+    } catch (error) {
+      if (error.response.status === 400) {
+        this.setState({ statusText: error.response.statusText });
+      }
+    }
   }
 
   isEmailValid() {
@@ -165,6 +173,11 @@ class RegisterForm extends Component {
           >
             Submit
           </Button>
+        )}
+        {this.state.statusText ? (
+          <Typography>{this.state.statusText}</Typography>
+        ) : (
+          ''
         )}
       </form>
     );
