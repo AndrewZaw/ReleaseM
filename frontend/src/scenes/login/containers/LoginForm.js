@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  InputAdornment,
-  IconButton
-} from '@material-ui/core';
+import { Container, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -44,11 +38,16 @@ class LoginForm extends Component {
     username: '',
     password: '',
     showPassword: false,
+    loggedIn: false,
     statusText: ''
   };
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  renderRedirect() {
+    return <Redirect to="/" />;
   }
 
   async handleSubmit(event) {
@@ -59,7 +58,8 @@ class LoginForm extends Component {
     };
     try {
       const response = await axios.post('/api/auth/login', { user });
-      console.log(response);
+      localStorage.setItem('auth-token', response.headers['auth-token']);
+      await this.setState({ loggedIn: true });
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
@@ -111,19 +111,11 @@ class LoginForm extends Component {
           }}
         />
         <br />
-        {this.state.statusText ? (
-          <Typography>{this.state.statusText}</Typography>
-        ) : (
-          <br />
-        )}
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={classes.button}
-        >
+        {this.state.statusText ? <Typography>{this.state.statusText}</Typography> : <br />}
+        <Button type="submit" variant="contained" color="primary" className={classes.button}>
           Login
         </Button>
+        {this.state.loggedIn && this.renderRedirect()}
       </form>
     );
   }

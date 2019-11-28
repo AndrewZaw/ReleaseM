@@ -79,7 +79,7 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['drake', 'migos'];
+    const artists = ['mili'];
     const response = await axios.post('/api/songs', { artists });
     let songs = response.data;
     songs = this.filterCorrectArtists(songs, artists);
