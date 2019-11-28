@@ -1,12 +1,8 @@
-const Joi = require('@hapi/joi');
+const bcrypt = require('bcryptjs');
 
-const validationSchema = Joi.object({
-  username: Joi.string()
-    .min(5)
-    .required(),
-  password: Joi.string()
-    .min(8)
-    .required()
-});
+const validatePassword = async (passwordString, hash) => {
+  const validPassword = await bcrypt.compare(passwordString, hash);
+  return validPassword;
+};
 
-module.exports = validationSchema.validate;
+module.exports = validatePassword;

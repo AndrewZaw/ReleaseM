@@ -58,7 +58,8 @@ class LoginForm extends Component {
       password: this.state.password
     };
     try {
-      await axios.post('/api/auth/login', { user });
+      const response = await axios.post('/api/auth/login', { user });
+      console.log(response);
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
@@ -121,7 +122,7 @@ class LoginForm extends Component {
           color="primary"
           className={classes.button}
         >
-          Submit
+          Login
         </Button>
       </form>
     );

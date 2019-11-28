@@ -176,7 +176,7 @@ class RegisterForm extends Component {
             className={classes.button}
             disabled
           >
-            Submit
+            Register
           </Button>
         )}
       </form>

@@ -4,7 +4,8 @@ const { User } = require('../../models');
 const registrationValidation = require('./methods/registrationValidation');
 const loginValidation = require('./methods/loginValidation');
 const hashPassword = require('./methods/hashPassword');
-const bcrypt = require('bcryptjs');
+const getTokenSecret = require('./methods/getTokenSecret');
+const jwt = require('jsonwebtoken');
 
 const createUserObject = (username, password, email) => ({
   email,
@@ -17,6 +18,7 @@ router.post('/register', async (req, res) => {
   const { error } = registrationValidation(user);
   const usernameExists = await User.findOne({ username: user.username });
   const emailExists = await User.findOne({ email: user.email });
+  console.log(user);
   if (usernameExists) {
     res.statusMessage = 'Username already exists';
     res.status(400).end();
@@ -28,7 +30,7 @@ router.post('/register', async (req, res) => {
     res.status(400).end();
   } else {
     try {
-      const hashedPassword = hashPassword(user.password);
+      const hashedPassword = await hashPassword(user.password);
       await User.create(
         createUserObject(user.username, hashedPassword, user.email)
       );
@@ -43,14 +45,13 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const user = req.body.user;
   User.findOne({ username: user.username }, async (err, foundUser) => {
-    console.log(foundUser);
     if (foundUser) {
-      const validPassword = await bcrypt.compare(
-        user.password,
-        foundUser.password
-      );
+      const validPassword = loginValidation(user.password, foundUser.password);
       if (validPassword) {
-        res.send({ username: user.username });
+        console.log('foundUser', foundUser);
+        const tokenSecret = getTokenSecret();
+        const token = jwt.sign({ _id: foundUser.id }, tokenSecret);
+        res.header('auth-token', token).send();
       } else {
         res.statusMessage = 'Invalid username/password combination';
         res.status(400).end();

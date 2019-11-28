@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const corsOptions = require('./corsOptions');
+const verifyToken = require('./verifyToken');
 require('dotenv').config();
 // Database
 require('./db');
