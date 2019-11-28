@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton
+} from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -79,6 +84,17 @@ class RegisterForm extends Component {
     event.preventDefault();
   }
 
+  fieldsValid() {
+    return (
+      this.state.username &&
+      this.state.password &&
+      this.state.email &&
+      this.isUsernameValid() &&
+      this.isPasswordValid() &&
+      this.isEmailValid()
+    );
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -101,7 +117,9 @@ class RegisterForm extends Component {
           label="Email"
           margin="normal"
           error={!this.isEmailValid()}
-          helperText={this.isEmailValid() ? '' : 'Please enter a valid email address'}
+          helperText={
+            this.isEmailValid() ? '' : 'Please enter a valid email address'
+          }
         />
         <TextField
           onChange={this.handleChange}
@@ -128,9 +146,26 @@ class RegisterForm extends Component {
           }}
         />
         <br />
-        <Button type="submit" variant="contained" color="primary" className={classes.button}>
-          Submit
-        </Button>
+        {this.fieldsValid() ? (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Submit
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            disabled
+          >
+            Submit
+          </Button>
+        )}
       </form>
     );
   }

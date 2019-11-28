@@ -6,17 +6,22 @@ const UserSchema = new Schema({
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
+    max: 255
   },
   username: {
     type: String,
     unique: true,
     required: true,
-    trim: true
+    trim: true,
+    min: 5,
+    max: 255
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    min: 8,
+    max: 255
   },
   artists: Array
 });

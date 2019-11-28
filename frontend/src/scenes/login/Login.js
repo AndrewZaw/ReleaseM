@@ -19,6 +19,11 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   state = {
     users: []
   };
@@ -30,16 +35,19 @@ class Login extends Component {
     });
   }
 
-  handleSubmit(user) {
-    this.setState(prevState => ({ users: [...prevState.users, user] }));
-  }
+  handleSubmit() {}
 
   render() {
     const { classes } = this.props;
     return (
       <Container className={classes.root}>
-        <LoginForm className={classes.form} handleSubmit={this.handleSubmit.bind(this)} />
-        <Typography variant="body1" component={Link} className={classes.link} to="/register">
+        <LoginForm className={classes.form} />
+        <Typography
+          variant="body1"
+          component={Link}
+          className={classes.link}
+          to="/register"
+        >
           Don't have an account? Register here!
         </Typography>
       </Container>

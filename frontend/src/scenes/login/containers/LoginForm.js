@@ -30,6 +30,14 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+    this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
+  }
+
   state = {
     email: '',
     username: '',
@@ -47,7 +55,6 @@ class LoginForm extends Component {
       username: this.state.username,
       hash: this.state.password
     };
-    await axios.post('/api/users/add', { user });
     await this.props.handleSubmit(user);
   }
 
@@ -62,9 +69,9 @@ class LoginForm extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <form className={classes.form} onSubmit={this.handleSubmit.bind(this)}>
+      <form className={classes.form} onSubmit={this.handleSubmit}>
         <TextField
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           id="username"
           name="username"
           className={classes.textField}
@@ -72,15 +79,7 @@ class LoginForm extends Component {
           margin="normal"
         />
         <TextField
-          onChange={this.handleChange.bind(this)}
-          id="email"
-          name="email"
-          className={classes.textField}
-          label="Email"
-          margin="normal"
-        />
-        <TextField
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           id="password"
           name="password"
           className={classes.textField}
@@ -92,8 +91,8 @@ class LoginForm extends Component {
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
-                  onClick={this.handleClickShowPassword.bind(this)}
-                  onMouseDown={this.handleMouseDownPassword.bind(this)}
+                  onClick={this.handleClickShowPassword}
+                  onMouseDown={this.handleMouseDownPassword}
                 >
                   {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>

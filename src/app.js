@@ -16,6 +16,7 @@ app.use(cors());
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/songs', require('./routes/api/songs'));
 app.use('/api/artists', require('./routes/api/artists'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
