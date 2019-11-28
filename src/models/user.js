@@ -21,7 +21,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     min: 8,
-    max: 255
+    max: 1024
   },
   artists: Array
 });

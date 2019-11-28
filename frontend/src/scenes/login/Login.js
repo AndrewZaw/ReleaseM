@@ -3,7 +3,6 @@ import { Container, Typography } from '@material-ui/core';
 import { LoginForm } from './containers';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -28,12 +27,7 @@ class Login extends Component {
     users: []
   };
 
-  async componentDidMount() {
-    const response = await axios.get('/api/users');
-    this.setState({
-      users: response.data.users
-    });
-  }
+  async componentDidMount() {}
 
   handleSubmit() {}
 

@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     }
     res.send(songs);
   } catch {
-    console.log('Error getting songs');
+    res.status(400).send(err);
   }
 });
 

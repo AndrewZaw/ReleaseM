@@ -53,9 +53,9 @@ class LoginForm extends Component {
     event.preventDefault();
     const user = {
       username: this.state.username,
-      hash: this.state.password
+      password: this.state.password
     };
-    await this.props.handleSubmit(user);
+    axios.post('/api/auth/login', { user });
   }
 
   handleClickShowPassword() {

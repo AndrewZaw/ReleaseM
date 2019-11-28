@@ -52,10 +52,10 @@ class RegisterForm extends Component {
     event.preventDefault();
     const user = {
       username: this.state.username,
-      hash: this.state.password
+      password: this.state.password,
+      email: this.state.email
     };
-    await axios.post('/api/users/add', { user });
-    await this.props.handleSubmit(user);
+    await axios.post('/api/auth/register', { user });
   }
 
   isEmailValid() {
