@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Container,
+  Typography,
   TextField,
   Button,
   InputAdornment,
@@ -42,7 +43,8 @@ class LoginForm extends Component {
     email: '',
     username: '',
     password: '',
-    showPassword: false
+    showPassword: false,
+    statusText: ''
   };
 
   handleChange(e) {
@@ -55,7 +57,14 @@ class LoginForm extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    axios.post('/api/auth/login', { user });
+    try {
+      await axios.post('/api/auth/login', { user });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 400) {
+        this.setState({ statusText: error.response.statusText });
+      }
+    }
   }
 
   handleClickShowPassword() {
@@ -101,6 +110,11 @@ class LoginForm extends Component {
           }}
         />
         <br />
+        {this.state.statusText ? (
+          <Typography>{this.state.statusText}</Typography>
+        ) : (
+          <br />
+        )}
         <Button
           type="submit"
           variant="contained"

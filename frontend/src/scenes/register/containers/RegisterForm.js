@@ -154,7 +154,11 @@ class RegisterForm extends Component {
             )
           }}
         />
-        <br />
+        {this.state.statusText ? (
+          <Typography>{this.state.statusText}</Typography>
+        ) : (
+          <br />
+        )}
         {this.fieldsValid() ? (
           <Button
             type="submit"
@@ -174,11 +178,6 @@ class RegisterForm extends Component {
           >
             Submit
           </Button>
-        )}
-        {this.state.statusText ? (
-          <Typography>{this.state.statusText}</Typography>
-        ) : (
-          ''
         )}
       </form>
     );
