@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
-const Joi = require('@hapi/Joi');
+const Joi = require('@hapi/joi');
+const bcrypt = require('bcryptjs');
 
 const validationSchema = Joi.object({
   username: Joi.string()
@@ -13,10 +14,10 @@ const validationSchema = Joi.object({
     .required()
 });
 
-const createUserObject = user => ({
-  email: user.email,
-  username: user.username,
-  password: user.password
+const createUserObject = (username, password, email) => ({
+  email,
+  username,
+  password
 });
 
 router.post('/register', async (req, res) => {
@@ -35,7 +36,11 @@ router.post('/register', async (req, res) => {
     res.status(400).end();
   } else {
     try {
-      await User.create(createUserObject(user));
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(user.password, salt);
+      await User.create(
+        createUserObject(user.username, hashedPassword, user.email)
+      );
       await console.log(user);
       await res.send(user);
     } catch (err) {

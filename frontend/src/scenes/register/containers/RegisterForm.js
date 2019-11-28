@@ -60,6 +60,7 @@ class RegisterForm extends Component {
     try {
       await axios.post('/api/auth/register', { user });
     } catch (error) {
+      console.log(error);
       if (error.response.status === 400) {
         this.setState({ statusText: error.response.statusText });
       }
