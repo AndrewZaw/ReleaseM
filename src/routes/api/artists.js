@@ -1,18 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { clientId, clientSecret } = require('./getClientIdAndSecret');
 
-let clientId;
-let clientSecret;
-if (process.env.clientId) {
-  clientId = process.env.clientId;
-  clientSecret = process.env.clientSecret;
-} else {
-  clientId = require('../../../config');
-  clientSecret = require('../../../config');
-}
-console.log('clientid', clientId);
-console.log('clientsecret', clientSecret);
 const getToken = async () => {
   const response = await axios({
     url: 'https://accounts.spotify.com/api/token',
@@ -30,7 +20,6 @@ const getToken = async () => {
     }
   });
   const token = response.data.access_token;
-  console.log('token', token);
   return token;
 };
 
