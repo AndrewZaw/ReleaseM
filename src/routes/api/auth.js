@@ -48,7 +48,6 @@ router.post('/login', async (req, res) => {
     if (foundUser) {
       const validPassword = loginValidation(user.password, foundUser.password);
       if (validPassword) {
-        console.log('foundUser', foundUser);
         const tokenSecret = getTokenSecret();
         const token = jwt.sign({ _id: foundUser.id }, tokenSecret);
         res.header('auth-token', token).send();

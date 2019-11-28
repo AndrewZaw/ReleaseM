@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { clientId, clientSecret } = require('./methods/getClientIdAndSecret');
+const { User } = require('../../models');
 
 const getToken = async () => {
   const response = await axios({
@@ -44,5 +45,12 @@ router.post('/', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+router.post('/add', async(req, res) => {
+  try {
+ 
+  }
+  catch{}
+})
 
 module.exports = router;

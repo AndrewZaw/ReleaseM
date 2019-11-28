@@ -14,6 +14,7 @@ const verifyToken = (req, res, next) => {
     res.statusMessage = 'InvalidToken';
     res.status(400).end();
   }
+  next();
 };
 
 module.exports = verifyToken;
