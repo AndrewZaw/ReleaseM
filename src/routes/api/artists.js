@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { clientId, clientSecret } = require('./getClientIdAndSecret');
+const { clientId, clientSecret } = require('./methods/getClientIdAndSecret');
 
 const getToken = async () => {
   const response = await axios({

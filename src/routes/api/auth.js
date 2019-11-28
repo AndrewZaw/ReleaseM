@@ -1,18 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
-const Joi = require('@hapi/joi');
 const bcrypt = require('bcryptjs');
-
-const validationSchema = Joi.object({
-  username: Joi.string()
-    .min(5)
-    .required(),
-  email: Joi.string().required(),
-  password: Joi.string()
-    .min(8)
-    .required()
-});
+const validate = require('./methods/validation');
 
 const createUserObject = (username, password, email) => ({
   email,
@@ -22,7 +12,7 @@ const createUserObject = (username, password, email) => ({
 
 router.post('/register', async (req, res) => {
   const user = req.body.user;
-  const { error } = validationSchema.validate(user);
+  const { error } = validate(user);
   const usernameExists = await User.findOne({ username: user.username });
   const emailExists = await User.findOne({ email: user.email });
   if (usernameExists) {
@@ -42,11 +32,13 @@ router.post('/register', async (req, res) => {
         createUserObject(user.username, hashedPassword, user.email)
       );
       await console.log(user);
-      await res.send(user);
+      await res.send({ user: user.username, email: user.email });
     } catch (err) {
       res.status(400).send(err);
     }
   }
 });
+
+router.post('/login', async (req, res) => {});
 
 module.exports = router;

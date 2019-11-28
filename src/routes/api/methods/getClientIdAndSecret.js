@@ -4,8 +4,8 @@ const getClientIdAndSecret = () => {
     const clientSecret = process.env.clientSecret;
     return { clientId, clientSecret };
   } else {
-    const { clientId } = require('../../../config');
-    const { clientSecret } = require('../../../config');
+    const { clientId } = require('../../../../config');
+    const { clientSecret } = require('../../../../config');
     return { clientId, clientSecret };
   }
 };
