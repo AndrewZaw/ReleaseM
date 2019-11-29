@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialAppBar from '@material-ui/core/AppBar';
 import { Toolbar, Typography, Button, IconButton, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Inbox, Menu, Settings } from '@material-ui/icons';
+import { Inbox, Menu, Settings, Info } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -19,7 +19,10 @@ const styles = theme => ({
     flexGrow: 1
   },
   listItemIcon: {
-    marginLeft: theme.spacing(3)
+    minWidth: 40
+  },
+  list: {
+    width: 225
   }
 });
 
@@ -49,7 +52,7 @@ class AppBar extends Component {
   renderList() {
     const { classes } = this.props;
     const listText = ['Settings', 'About'];
-    const listIcons = [<Settings />];
+    const listIcons = [<Settings />, <Info />];
     const listLinks = ['/settings', '/about'];
     const list = listText.map((text, i) => ({
       text: text,
