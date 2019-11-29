@@ -51,6 +51,16 @@ class Home extends Component {
                   Login
                 </Button>
               </Grid>
+              <Grid item>
+                <Button variant="outlined" size="large" color="primary" component={Link} to="/songs">
+                  Songs
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="outlined" size="large" color="primary" component={Link} to="/artists">
+                  Artists
+                </Button>
+              </Grid>
             </Grid>
           </div>
         </Container>
