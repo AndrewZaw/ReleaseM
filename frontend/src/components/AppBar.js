@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialAppBar from '@material-ui/core/AppBar';
-import { Toolbar, Typography, Button, IconButton, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import {
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip
+} from '@material-ui/core';
 import { Inbox, Menu, Settings, Info } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import GithubIcon from './GithubIcon';
 
 const styles = theme => ({
   root: {
@@ -23,6 +36,9 @@ const styles = theme => ({
   },
   list: {
     width: 225
+  },
+  githubButton: {
+    marginRight: '1em'
   }
 });
 
@@ -83,6 +99,16 @@ class AppBar extends Component {
             <Typography component={Link} to="/" variant="h4" className={classes.title}>
               ReleaseM
             </Typography>
+            <Tooltip title="Github Repository" placement="bottom" leaveDelay={300}>
+              <IconButton
+                className={classes.githubButton}
+                color="inherit"
+                aria-label="Github Repository"
+                onClick={() => window.open('https://github.com/AndrewZaw/ReleaseM', '_blank')}
+              >
+                <GithubIcon />
+              </IconButton>
+            </Tooltip>
             <Button color="inherit" component={Link} to="/login">
               Login
             </Button>

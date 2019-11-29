@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar } from './components';
+import { AppBar, Footer } from './components';
 import { Home, Login, Register, Songs, Artists, About, Settings } from './scenes';
 import './App.css';
 import 'typeface-roboto';
@@ -19,6 +19,7 @@ function App() {
           <Route path="/settings" component={Settings} />
           <Route path="/about" component={About} />
         </Switch>
+        <Footer />
       </div>
     </Router>
   );

@@ -36,12 +36,7 @@ class Login extends Component {
     return (
       <Container className={classes.root}>
         <LoginForm className={classes.form} />
-        <Typography
-          variant="body1"
-          component={Link}
-          className={classes.link}
-          to="/register"
-        >
+        <Typography variant="body1" component={Link} className={classes.link} to="/register">
           Don't have an account? Register here!
         </Typography>
       </Container>

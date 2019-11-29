@@ -16,7 +16,12 @@ class About extends Component {
         <Typography variant="h1" className={classes.title}>
           About
         </Typography>
-        <Typography>ReleaseM is an application designed to allow you to keep track of your favorite artists! Made by Andrew Zaw</Typography>
+        <Typography>
+          Designed in mind for those who love music, ReleaseM helps you keep up with the latest music releases from your favorite artists!
+          Using the Spotify API, it allows you to organize, find and listen to new music from your favorite artists. It's as simple as
+          creating an account and entering the names of artists you want to keep tabs on, we'll do the rest! <br /> <br />
+          Created and designed by <a href="https://andrewzaw.github.io/">Andrew Zaw</a>
+        </Typography>
       </Container>
     );
   }

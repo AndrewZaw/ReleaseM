@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Typography, Card, Button } from '@material-ui/core';
+import { Container, Typography, Grid, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -15,6 +15,12 @@ const styles = theme => ({
     textAlign: 'center',
     width: 500,
     marginTop: 30
+  },
+  heroContent: {
+    padding: theme.spacing(6)
+  },
+  heroButtons: {
+    marginTop: theme.spacing(6)
   }
 });
 
@@ -24,14 +30,31 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container>
-        <Button color="inherit" component={Link} to="/artists">
-          Artists
-        </Button>
-        <Button color="inherit" component={Link} to="/songs">
-          Songs
-        </Button>
-      </Container>
+      <div className={classes.heroContent}>
+        <Container maxWidth="sm">
+          <Typography component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
+            ReleaseM
+          </Typography>
+          <Typography variant="h5" align="center" color="textSecondary" paragraph>
+            Welcome to ReleaseM, the music app designed with you in mind. Tracking the latest releases from all your favorite artists has
+            never been easier!
+          </Typography>
+          <div className={classes.heroButtons}>
+            <Grid container spacing={4} justify="center">
+              <Grid item>
+                <Button variant="contained" size="large" color="primary" component={Link} to="/register">
+                  Register
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button variant="outlined" size="large" color="primary" component={Link} to="/login">
+                  Login
+                </Button>
+              </Grid>
+            </Grid>
+          </div>
+        </Container>
+      </div>
     );
   }
 }

@@ -1,3 +1,5 @@
 import AppBar from './AppBar';
+import GithubIcon from './GithubIcon';
+import Footer from './Footer';
 
-export { AppBar };
+export { AppBar, GithubIcon, Footer };
