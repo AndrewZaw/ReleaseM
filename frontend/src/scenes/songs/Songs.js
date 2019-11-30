@@ -18,6 +18,7 @@ class Songs extends Component {
   }
 
   state = {
+    unfilteredSongs: [],
     songs: [],
     daysBack: 30
   };
@@ -50,35 +51,32 @@ class Songs extends Component {
   };
 
   handleSubmit(daysBack) {
-    this.setState({ daysBack: daysBack });
+    this.setState({ daysBack });
+    const dateLimit = this.getPreviousDate(daysBack);
+    const songs = this.filterDateLimit(this.state.unfilteredSongs, dateLimit);
+    this.setState({ songs });
   }
 
   async componentDidMount() {
-    const songs = await this.getSongs();
+    const { songs, unfilteredSongs } = await this.getSongs();
     this.setState({
-      songs: songs
-    });
-    console.log(this.state.songs);
-  }
-
-  async componentDidUpdate() {
-    const songs = await this.getSongs();
-    this.setState({
-      songs: songs
+      songs,
+      unfilteredSongs
     });
     console.log(this.state.songs);
   }
 
   async getSongs() {
     const response = await axios.post('/api/songs', { 'auth-token': localStorage.getItem('auth-token') });
-    console.log(response);
-    // let songs = response.data;
-    // songs = this.filterCorrectArtists(songs, artists);
-    // songs = this.sortByReleaseDate(songs);
-    // songs = this.filterDuplicates(songs);
-    // const dateLimit = this.getPreviousDate(this.state.daysBack);
-    // songs = this.filterDateLimit(songs, dateLimit);
-    // return songs;
+    let songs = response.data.songs;
+    const artists = response.data.artists;
+    songs = this.filterCorrectArtists(songs, artists);
+    songs = this.sortByReleaseDate(songs);
+    songs = this.filterDuplicates(songs);
+    const dateLimit = this.getPreviousDate(this.state.daysBack);
+    const unfilteredSongs = songs;
+    songs = this.filterDateLimit(songs, dateLimit);
+    return { songs, unfilteredSongs };
   }
 
   render() {

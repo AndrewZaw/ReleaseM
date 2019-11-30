@@ -3,6 +3,7 @@ import { AppBar, Footer } from './components';
 import { Home, Login, Register, Songs, Artists, About, Settings } from './scenes';
 import './App.css';
 import 'typeface-roboto';
+import { Button } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {

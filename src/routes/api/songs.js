@@ -26,16 +26,6 @@ const getToken = async () => {
   return token;
 };
 
-const getArtists = userId => {
-  User.findOne({ _id: userId }, (err, user) => {
-    if (err) {
-      return err;
-    }
-    console.log(user.artists);
-    return user.artists;
-  });
-};
-
 const getSongs = async (token, artist, amount = 50) => {
   let songs = [];
   for (let i = 0; i < amount; i += 50) {
@@ -60,15 +50,22 @@ router.post('/', async (req, res) => {
       res.statusMessage = 'Not Logged In';
       res.status(400).end();
     }
-    const artists = getArtists(userId);
-    const spotifyToken = await getToken();
-    let songs = [];
-    console.log('artists', artists);
-    for (let artist of artists) {
-      const newSongs = await getSongs(spotifyToken, artist.toLowerCase(), 500);
-      songs = [...songs, ...newSongs];
-    }
-    res.send(songs);
+    User.findOne({ _id: userId }, async (err, user) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        const spotifyToken = await getToken();
+        let songs = [];
+        const artists = JSON.parse(JSON.stringify(user.artists));
+        for (let artist of artists) {
+          console.log(artist);
+          const newSongs = await getSongs(spotifyToken, artist.toLowerCase(), 50);
+          console.log('newSOngs', newSongs);
+          songs = [...songs, ...newSongs];
+        }
+        res.send({ songs, artists: artists.map(ele => ele.toLowerCase()) });
+      }
+    });
   } catch (err) {
     res.statusMessage = 'Could not get songs';
     res.status(400).end();
