@@ -15,7 +15,7 @@ import {
   Tooltip
 } from '@material-ui/core';
 import { Inbox, Menu, Settings, Info } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import GithubIcon from './GithubIcon';
 
 const styles = theme => ({
@@ -44,7 +44,8 @@ const styles = theme => ({
 
 class AppBar extends Component {
   state = {
-    drawerOpen: false
+    drawerOpen: false,
+    loggedIn: this.isLoggedIn()
   };
 
   toggleDrawer = open => event => {
@@ -83,6 +84,19 @@ class AppBar extends Component {
     );
   }
 
+  renderRedirect() {
+    return <Redirect to="/login" />;
+  }
+
+  logout() {
+    localStorage.setItem('auth-token', '');
+    this.setState({ loggedIn: false });
+  }
+
+  isLoggedIn() {
+    return localStorage.getItem('auth-token');
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -109,9 +123,17 @@ class AppBar extends Component {
                 <GithubIcon />
               </IconButton>
             </Tooltip>
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
+            {this.state.loggedIn ? (
+              <div>
+                <Button color="inherit" onClick={this.logout.bind(this)}>
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Button color="inherit" component={Link} to="/login">
+                Login
+              </Button>
+            )}
           </Toolbar>
         </MaterialAppBar>
       </div>
