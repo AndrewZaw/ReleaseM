@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { clientId, clientSecret } = require('./methods/getClientIdAndSecret');
+const jwt = require('jsonwebtoken');
+const getTokenSecret = require('./methods/getTokenSecret');
+const { User } = require('../../models');
 
 const getToken = async () => {
   const response = await axios({
@@ -23,6 +26,16 @@ const getToken = async () => {
   return token;
 };
 
+const getArtists = userId => {
+  User.findOne({ _id: userId }, (err, user) => {
+    if (err) {
+      return err;
+    }
+    console.log(user.artists);
+    return user.artists;
+  });
+};
+
 const getSongs = async (token, artist, amount = 50) => {
   let songs = [];
   for (let i = 0; i < amount; i += 50) {
@@ -39,17 +52,26 @@ const getSongs = async (token, artist, amount = 50) => {
 };
 
 router.post('/', async (req, res) => {
+  const authToken = req.body['auth-token'];
+  const tokenSecret = getTokenSecret();
   try {
-    const artists = req.body.artists;
-    const token = await getToken();
+    const userId = await jwt.verify(authToken, tokenSecret);
+    if (!userId) {
+      res.statusMessage = 'Not Logged In';
+      res.status(400).end();
+    }
+    const artists = getArtists(userId);
+    const spotifyToken = await getToken();
     let songs = [];
+    console.log('artists', artists);
     for (let artist of artists) {
-      const newSongs = await getSongs(token, artist.toLowerCase(), 500);
+      const newSongs = await getSongs(spotifyToken, artist.toLowerCase(), 500);
       songs = [...songs, ...newSongs];
     }
     res.send(songs);
-  } catch {
-    res.status(400).send(err);
+  } catch (err) {
+    res.statusMessage = 'Could not get songs';
+    res.status(400).end();
   }
 });
 

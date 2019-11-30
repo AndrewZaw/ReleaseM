@@ -24,28 +24,19 @@ class Songs extends Component {
 
   getPreviousDate = days => {
     const today = new Date();
-    const returnDate = new Date(new Date().setDate(today.getDate() - days))
-      .toISOString()
-      .slice(0, 10);
+    const returnDate = new Date(new Date().setDate(today.getDate() - days)).toISOString().slice(0, 10);
     return returnDate;
   };
 
   filterCorrectArtists = (songs, artists) => {
-    return songs.filter(song =>
-      song.artists.some(artist => artists.includes(artist.name.toLowerCase()))
-    );
+    return songs.filter(song => song.artists.some(artist => artists.includes(artist.name.toLowerCase())));
   };
 
-  filterDateLimit = (songs, dateLimit) =>
-    songs.filter(song => song.album.release_date > dateLimit);
+  filterDateLimit = (songs, dateLimit) => songs.filter(song => song.album.release_date > dateLimit);
 
-  sortByReleaseDate = songs =>
-    songs.sort((songOne, songTwo) =>
-      songOne.album.release_date < songTwo.album.release_date ? 1 : -1
-    );
+  sortByReleaseDate = songs => songs.sort((songOne, songTwo) => (songOne.album.release_date < songTwo.album.release_date ? 1 : -1));
 
-  isSongInArray = (array, songName) =>
-    array.find(song => song.name === songName);
+  isSongInArray = (array, songName) => array.find(song => song.name === songName);
 
   filterDuplicates = songs => {
     songs = songs.reverse();
@@ -79,15 +70,15 @@ class Songs extends Component {
   }
 
   async getSongs() {
-    const artists = ['mili'];
-    const response = await axios.post('/api/songs', { artists });
-    let songs = response.data;
-    songs = this.filterCorrectArtists(songs, artists);
-    songs = this.sortByReleaseDate(songs);
-    songs = this.filterDuplicates(songs);
-    const dateLimit = this.getPreviousDate(this.state.daysBack);
-    songs = this.filterDateLimit(songs, dateLimit);
-    return songs;
+    const response = await axios.post('/api/songs', { 'auth-token': localStorage.getItem('auth-token') });
+    console.log(response);
+    // let songs = response.data;
+    // songs = this.filterCorrectArtists(songs, artists);
+    // songs = this.sortByReleaseDate(songs);
+    // songs = this.filterDuplicates(songs);
+    // const dateLimit = this.getPreviousDate(this.state.daysBack);
+    // songs = this.filterDateLimit(songs, dateLimit);
+    // return songs;
   }
 
   render() {
@@ -96,8 +87,7 @@ class Songs extends Component {
       <Container className={classes.root}>
         <SongForm handleSubmit={this.handleSubmit} />
         <Typography className={classes.text}>
-          By default, only songs up to a month old are shown. This can be
-          adjusted with the form above.
+          By default, only songs up to a month old are shown. This can be adjusted with the form above.
         </Typography>
         {this.state.songs ? (
           this.state.songs.map((song, i) => (

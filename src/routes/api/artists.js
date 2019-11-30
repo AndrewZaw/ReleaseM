@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const { clientId, clientSecret } = require('./methods/getClientIdAndSecret');
+const jwt = require('jsonwebtoken');
+const getTokenSecret = require('./methods/getTokenSecret');
 const { User } = require('../../models');
 
 const getToken = async () => {
@@ -46,11 +48,33 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.post('/add', async(req, res) => {
+router.post('/add', async (req, res) => {
+  const authToken = req.body['auth-token'];
+  const tokenSecret = getTokenSecret();
   try {
- 
+    const userId = await jwt.verify(authToken, tokenSecret);
+    if (!userId) {
+      res.statusMessage = 'Not Logged In';
+      res.status(400).end();
+    }
+    const artist = req.body.artist;
+    User.findOne({ _id: userId }, (err, user) => {
+      if (err) {
+        res.status(400).send(err);
+      }
+      if (user.artists.includes(artist)) {
+        res.statusMessage = 'Artist already added';
+        res.status(409).end();
+      } else {
+        user.artists.push(artist);
+        user.save();
+        res.send(artist);
+      }
+    });
+  } catch (err) {
+    res.statusMessage = 'Could not add artist';
+    res.status(400).end();
   }
-  catch{}
-})
+});
 
 module.exports = router;

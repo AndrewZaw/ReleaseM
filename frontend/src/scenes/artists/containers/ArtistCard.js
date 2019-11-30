@@ -32,8 +32,9 @@ class ArtistCard extends Component {
     super();
   }
 
-  async addArtist() {
-    await axios.post('/api/artists/add', { artistId: this.props.id, 'auth-token': localStorage.getItem('auth-token') });
+  async addArtist(artistName) {
+    const response = await axios.post('/api/artists/add', { artist: artistName, 'auth-token': localStorage.getItem('auth-token') });
+    console.log(response);
   }
 
   removeArtist() {}
@@ -65,7 +66,7 @@ class ArtistCard extends Component {
                   Remove from Your Artists
                 </Button>
               ) : (
-                <Button color="secondary" className={classes.button} onClick={this.addArtist}>
+                <Button color="secondary" className={classes.button} onClick={() => this.addArtist(this.props.name)}>
                   Add to Your Artists
                 </Button>
               )}
