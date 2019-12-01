@@ -14,7 +14,7 @@ import {
   ListItemText,
   Tooltip
 } from '@material-ui/core';
-import { Menu, Settings, Info, Help } from '@material-ui/icons';
+import { Home, Menu, Settings, Info, Help } from '@material-ui/icons';
 import { Redirect, Link } from 'react-router-dom';
 import GithubIcon from './GithubIcon';
 
@@ -70,9 +70,9 @@ class AppBar extends Component {
 
   renderList() {
     const { classes } = this.props;
-    const listText = ['Settings', 'How to Use', 'About'];
-    const listIcons = [<Settings />, <Help />, <Info />];
-    const listLinks = ['/settings', '/help', '/about'];
+    const listText = ['Home', 'How to Use', 'Settings', 'About'];
+    const listIcons = [<Home />, <Help />, <Settings />, <Info />];
+    const listLinks = ['/', '/help', '/settings', '/about'];
     const list = listText.map((text, i) => ({
       text: text,
       icon: listIcons[i],

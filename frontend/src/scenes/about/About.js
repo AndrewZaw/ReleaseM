@@ -13,7 +13,7 @@ class About extends Component {
     const { classes } = this.props;
     return (
       <Container className={classes.root}>
-        <Typography variant="h1" className={classes.title}>
+        <Typography variant="h2" className={classes.title}>
           About ReleaseM
         </Typography>
         <Typography>

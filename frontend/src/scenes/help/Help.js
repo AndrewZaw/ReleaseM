@@ -16,7 +16,7 @@ class Help extends Component {
     const { classes } = this.props;
     return (
       <Container>
-        <Typography variant="h1" className={classes.title}>
+        <Typography variant="h2" className={classes.title}>
           How to Use
         </Typography>
         <Typography>
