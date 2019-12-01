@@ -26,9 +26,7 @@ class Login extends Component {
     users: []
   };
 
-  async componentDidMount() {
-    console.log(this.props);
-  }
+  async componentDidMount() {}
 
   render() {
     const { classes } = this.props;

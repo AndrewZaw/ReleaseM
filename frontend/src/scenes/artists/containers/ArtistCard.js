@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Typography, Button, Grid, Card, CardContent, CardActionArea, CardActions, CardMedia } from '@material-ui/core';
+import {
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardActions,
+  CardMedia
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
@@ -33,8 +42,10 @@ class ArtistCard extends Component {
   }
 
   async addArtist(artistName) {
-    const response = await axios.post('/api/artists/add', { artist: artistName, 'auth-token': localStorage.getItem('auth-token') });
-    console.log(response);
+    const response = await axios.post('/api/artists/add', {
+      artist: artistName,
+      'auth-token': localStorage.getItem('auth-token')
+    });
   }
 
   removeArtist() {}
@@ -43,9 +54,18 @@ class ArtistCard extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
-        <Grid container direction="row" justify="flex-start" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
           <Grid item xs={2}>
-            <CardMedia className={classes.media} image={this.props.img} title={this.props.name} />
+            <CardMedia
+              className={classes.media}
+              image={this.props.img}
+              title={this.props.name}
+            />
           </Grid>
           <Grid item xs={4}>
             <CardContent>
@@ -56,21 +76,36 @@ class ArtistCard extends Component {
           </Grid>
           <Grid item xs={3}>
             <CardContent>
-              <Typography>{this.props.monthlyListeners} monthly listeners</Typography>
+              <Typography>
+                {this.props.monthlyListeners} monthly listeners
+              </Typography>
             </CardContent>
           </Grid>
           <Grid item xs={3}>
             <CardActions className={classes.buttonArea}>
               {this.props.yourArtists ? (
-                <Button color="secondary" className={classes.button} onClick={this.removeArtist}>
+                <Button
+                  color="secondary"
+                  className={classes.button}
+                  onClick={this.removeArtist}
+                >
                   Remove from Your Artists
                 </Button>
               ) : (
-                <Button color="secondary" className={classes.button} onClick={() => this.addArtist(this.props.name)}>
+                <Button
+                  color="secondary"
+                  className={classes.button}
+                  onClick={() => this.addArtist(this.props.name)}
+                >
                   Add to Your Artists
                 </Button>
               )}
-              <Button color="primary" className={classes.button} target="_blank" href={this.props.profileUrl}>
+              <Button
+                color="primary"
+                className={classes.button}
+                target="_blank"
+                href={this.props.profileUrl}
+              >
                 See Profile on Spotify
               </Button>
             </CardActions>

@@ -58,9 +58,11 @@ router.post('/', async (req, res) => {
         let songs = [];
         const artists = JSON.parse(JSON.stringify(user.artists));
         for (let artist of artists) {
-          console.log(artist);
-          const newSongs = await getSongs(spotifyToken, artist.toLowerCase(), 50);
-          console.log('newSOngs', newSongs);
+          const newSongs = await getSongs(
+            spotifyToken,
+            artist.toLowerCase(),
+            50
+          );
           songs = [...songs, ...newSongs];
         }
         res.send({ songs, artists: artists.map(ele => ele.toLowerCase()) });

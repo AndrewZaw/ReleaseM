@@ -34,7 +34,6 @@ router.post('/register', async (req, res) => {
       await User.create(
         createUserObject(user.username, hashedPassword, user.email)
       );
-      await console.log(user);
       await res.send({ user: user.username, email: user.email });
     } catch (err) {
       res.status(400).send(err);

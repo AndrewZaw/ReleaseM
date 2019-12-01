@@ -72,7 +72,6 @@ class LoginForm extends Component {
     };
     try {
       const response = await axios.post('/api/auth/login', { user });
-      console.log(this.props);
       this.props.login(response.headers['auth-token']);
     } catch (error) {
       console.log(error);

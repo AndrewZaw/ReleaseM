@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppBar, Footer } from './components';
+import { AppBar, Footer, Snackbar } from './components';
 import {
   Home,
   Login,
@@ -7,7 +7,8 @@ import {
   Songs,
   Artists,
   About,
-  Settings
+  Settings,
+  Help
 } from './scenes';
 import { Button } from '@material-ui/core';
 import { BrowserRouter as ReactRouter, Switch, Route } from 'react-router-dom';
@@ -36,6 +37,15 @@ class Router extends Component {
     this.setState({ loggedIn: this.isLoggedIn() });
   };
 
+  setSnackbarType() {
+    if (this.state.loggedIn) {
+      return 'login';
+    } else if (!this.state.loggedIn) {
+      return 'logout';
+    }
+    return;
+  }
+
   render() {
     return (
       <ReactRouter>
@@ -54,7 +64,9 @@ class Router extends Component {
             <Route path="/artists" component={Artists} />
             <Route path="/settings" component={Settings} />
             <Route path="/about" component={About} />
+            <Route path="/help" component={Help} />
           </Switch>
+          <Snackbar snackbarType={this.setSnackbarType()} />
           <Footer />
         </div>
       </ReactRouter>

@@ -14,7 +14,7 @@ class About extends Component {
     return (
       <Container className={classes.root}>
         <Typography variant="h1" className={classes.title}>
-          About
+          About ReleaseM
         </Typography>
         <Typography>
           Designed in mind for those who love music, ReleaseM helps you keep up

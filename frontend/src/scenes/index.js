@@ -5,5 +5,6 @@ import About from './about/About';
 import Songs from './songs/Songs';
 import Artists from './artists/Artists';
 import Settings from './settings/Settings';
+import Help from './help/Help';
 
-export { Login, Home, Register, About, Songs, Artists, Settings };
+export { Login, Home, Register, About, Songs, Artists, Settings, Help };
