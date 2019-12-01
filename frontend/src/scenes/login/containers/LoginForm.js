@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Typography, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton
+} from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
@@ -25,8 +32,8 @@ const styles = theme => ({
 });
 
 class LoginForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
@@ -38,7 +45,6 @@ class LoginForm extends Component {
     username: '',
     password: '',
     showPassword: false,
-    loggedIn: false,
     statusText: ''
   };
 
@@ -50,6 +56,14 @@ class LoginForm extends Component {
     return <Redirect to="/" />;
   }
 
+  handleClickShowPassword() {
+    this.setState(prevState => ({ showPassword: !prevState.showPassword }));
+  }
+
+  handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
     const user = {
@@ -58,22 +72,14 @@ class LoginForm extends Component {
     };
     try {
       const response = await axios.post('/api/auth/login', { user });
-      localStorage.setItem('auth-token', response.headers['auth-token']);
-      await this.setState({ loggedIn: true });
+      console.log(this.props);
+      this.props.login(response.headers['auth-token']);
     } catch (error) {
       console.log(error);
       if (error.response.status === 400) {
         this.setState({ statusText: error.response.statusText });
       }
     }
-  }
-
-  handleClickShowPassword() {
-    this.setState(prevState => ({ showPassword: !prevState.showPassword }));
-  }
-
-  handleMouseDownPassword(event) {
-    event.preventDefault();
   }
 
   render() {
@@ -111,11 +117,20 @@ class LoginForm extends Component {
           }}
         />
         <br />
-        {this.state.statusText ? <Typography>{this.state.statusText}</Typography> : <br />}
-        <Button type="submit" variant="contained" color="primary" className={classes.button}>
+        {this.state.statusText ? (
+          <Typography>{this.state.statusText}</Typography>
+        ) : (
+          <br />
+        )}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={classes.button}
+        >
           Login
         </Button>
-        {this.state.loggedIn && this.renderRedirect()}
+        {this.props.loggedIn && this.renderRedirect()}
       </form>
     );
   }

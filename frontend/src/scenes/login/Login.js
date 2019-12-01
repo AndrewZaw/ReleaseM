@@ -18,25 +18,33 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
   }
 
   state = {
     users: []
   };
 
-  async componentDidMount() {}
-
-  handleSubmit() {}
+  async componentDidMount() {
+    console.log(this.props);
+  }
 
   render() {
     const { classes } = this.props;
     return (
       <Container className={classes.root}>
-        <LoginForm className={classes.form} />
-        <Typography variant="body1" component={Link} className={classes.link} to="/register">
+        <LoginForm
+          login={this.props.login}
+          loggedIn={this.props.loggedIn}
+          className={classes.form}
+        />
+        <Typography
+          variant="body1"
+          component={Link}
+          className={classes.link}
+          to="/register"
+        >
           Don't have an account? Register here!
         </Typography>
       </Container>

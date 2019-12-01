@@ -44,12 +44,14 @@ const styles = theme => ({
 
 class AppBar extends Component {
   state = {
-    drawerOpen: false,
-    loggedIn: this.isLoggedIn()
+    drawerOpen: false
   };
 
   toggleDrawer = open => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return;
     }
 
@@ -78,23 +80,23 @@ class AppBar extends Component {
     }));
 
     return (
-      <div className={classes.list} role="presentation" onClick={this.toggleDrawer(false)} onKeyDown={this.toggleDrawer(false)}>
-        <List>{list.map(listItem => this.renderListItem(listItem.text, listItem.icon, listItem.link))}</List>
+      <div
+        className={classes.list}
+        role="presentation"
+        onClick={this.toggleDrawer(false)}
+        onKeyDown={this.toggleDrawer(false)}
+      >
+        <List>
+          {list.map(listItem =>
+            this.renderListItem(listItem.text, listItem.icon, listItem.link)
+          )}
+        </List>
       </div>
     );
   }
 
   renderRedirect() {
     return <Redirect to="/login" />;
-  }
-
-  logout() {
-    localStorage.setItem('auth-token', '');
-    this.setState({ loggedIn: false });
-  }
-
-  isLoggedIn() {
-    return localStorage.getItem('auth-token');
   }
 
   render() {
@@ -106,26 +108,43 @@ class AppBar extends Component {
         </Drawer>
         <MaterialAppBar position="static">
           <Toolbar>
-            <IconButton onClick={this.toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton
+              onClick={this.toggleDrawer(true)}
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
               <Menu />
             </IconButton>
 
-            <Typography component={Link} to="/" variant="h4" className={classes.title}>
+            <Typography
+              component={Link}
+              to="/"
+              variant="h4"
+              className={classes.title}
+            >
               ReleaseM
             </Typography>
-            <Tooltip title="Github Repository" placement="bottom" leaveDelay={300}>
+            <Tooltip
+              title="Github Repository"
+              placement="bottom"
+              leaveDelay={300}
+            >
               <IconButton
                 className={classes.githubButton}
                 color="inherit"
                 aria-label="Github Repository"
-                onClick={() => window.open('https://github.com/AndrewZaw/ReleaseM', '_blank')}
+                onClick={() =>
+                  window.open('https://github.com/AndrewZaw/ReleaseM', '_blank')
+                }
               >
                 <GithubIcon />
               </IconButton>
             </Tooltip>
-            {this.state.loggedIn ? (
+            {this.props.loggedIn ? (
               <div>
-                <Button color="inherit" onClick={this.logout.bind(this)}>
+                <Button color="inherit" onClick={this.props.logout}>
                   Logout
                 </Button>
               </div>

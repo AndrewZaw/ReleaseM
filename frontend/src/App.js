@@ -1,29 +1,10 @@
 import React from 'react';
-import { AppBar, Footer } from './components';
-import { Home, Login, Register, Songs, Artists, About, Settings } from './scenes';
 import './App.css';
 import 'typeface-roboto';
-import { Button } from '@material-ui/core';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Router from './Router';
 
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        <AppBar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/songs" component={Songs} />
-          <Route path="/artists" component={Artists} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/about" component={About} />
-        </Switch>
-        <Footer />
-      </div>
-    </Router>
-  );
+  return <Router />;
 }
 
 export default App;
