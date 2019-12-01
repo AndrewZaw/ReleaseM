@@ -35,8 +35,8 @@ Planned features:
 - [x] Add artists to your account.
 - [x] View latest songs from your artists.
 - [x] Ability to login and set your artists.
-- [] Ability to set preferences.
-- [] Ability to view your own artists.
+- [ ] Ability to set preferences.
+- [ ] Ability to view your own artists.
 - [ ] Modify data depending on your preferences and artists.
 
 ## Installation
