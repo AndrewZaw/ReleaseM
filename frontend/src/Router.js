@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppBar, Footer, Snackbar } from './components';
+import { AppBar, Footer } from './components';
 import {
   Home,
   Login,
@@ -10,7 +10,7 @@ import {
   Settings,
   Help
 } from './scenes';
-import { Button } from '@material-ui/core';
+import { withSnackbar } from 'notistack';
 import { BrowserRouter as ReactRouter, Switch, Route } from 'react-router-dom';
 import { PropsRoute } from './components';
 
@@ -27,24 +27,27 @@ class Router extends Component {
     return !!localStorage.getItem('auth-token');
   }
 
+  displayLoginSnackbar = () =>
+    this.props.enqueueSnackbar('Logged in successfully!', {
+      variant: 'success'
+    });
+
   login = token => {
     localStorage.setItem('auth-token', token);
+    this.displayLoginSnackbar();
     this.setState({ loggedIn: this.isLoggedIn() });
   };
+
+  displayLogoutSnackbar = () =>
+    this.props.enqueueSnackbar('Logged out successfully!', {
+      variant: 'error'
+    });
 
   logout = () => {
     localStorage.setItem('auth-token', '');
+    this.displayLogoutSnackbar();
     this.setState({ loggedIn: this.isLoggedIn() });
   };
-
-  setSnackbarType() {
-    if (this.state.loggedIn) {
-      return 'login';
-    } else if (!this.state.loggedIn) {
-      return 'logout';
-    }
-    return;
-  }
 
   render() {
     return (
@@ -66,7 +69,7 @@ class Router extends Component {
             <Route path="/about" component={About} />
             <Route path="/help" component={Help} />
           </Switch>
-          <Snackbar snackbarType={this.setSnackbarType()} />
+          >
           <Footer />
         </div>
       </ReactRouter>
@@ -74,4 +77,4 @@ class Router extends Component {
   }
 }
 
-export default Router;
+export default withSnackbar(Router);

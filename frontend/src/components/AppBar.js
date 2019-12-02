@@ -80,8 +80,8 @@ class AppBar extends Component {
     const listText = [
       'Home',
       'How to Use',
-      'My Songs',
-      'My Artists',
+      'Your Songs',
+      'Your Artists',
       'Settings',
       'About'
     ];

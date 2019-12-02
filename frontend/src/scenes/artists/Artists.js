@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ArtistForm from './containers/ArtistForm';
 import YourArtists from './containers/YourArtists';
 import ArtistSearch from './containers/ArtistSearch';
+import { withSnackbar } from 'notistack';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -40,20 +41,33 @@ class Artists extends Component {
     this.setState({ yourArtists: artists });
   };
 
+  displayAddArtistSnackbar = artist =>
+    this.props.enqueueSnackbar(`Added ${artist} to your artists.`, {
+      variant: 'success'
+    });
+
   addArtist = async artistName => {
     const response = await axios.post('/api/artists/add', {
       artist: artistName,
       'auth-token': localStorage.getItem('auth-token')
     });
+    const artist = response.data;
+    this.displayAddArtistSnackbar(artist);
     this.updateArtists();
-    // this.setState(prevState => ({artists: prevState.artists.filter(element => element !== artist),yourArtists: prevState.yourArtists.push(artist)}))
   };
+
+  displayRemoveArtistSnackbar = artist =>
+    this.props.enqueueSnackbar(`Removed ${artist} from your artists.`, {
+      variant: 'error'
+    });
 
   removeArtist = async artistName => {
     const response = await axios.post('/api/artists/remove', {
       artist: artistName,
       'auth-token': localStorage.getItem('auth-token')
     });
+    const artist = response.data;
+    this.displayRemoveArtistSnackbar(artist);
     this.updateArtists();
   };
 
@@ -98,4 +112,4 @@ class Artists extends Component {
   }
 }
 
-export default withStyles(styles)(Artists);
+export default withStyles(styles)(withSnackbar(Artists));
