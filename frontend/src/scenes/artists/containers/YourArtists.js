@@ -36,10 +36,11 @@ class YourArtists extends Component {
     const { classes } = this.props;
     return (
       <Container>
-        {this.props.artists ? (
+        {this.props.artists.length ? (
           this.props.artists.map((artist, i) => {
             return (
               <ArtistCard
+                removeArtist={this.props.removeArtist}
                 key={i}
                 id={artist.id}
                 name={artist.name}

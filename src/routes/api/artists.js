@@ -88,6 +88,35 @@ router.post('/add', async (req, res) => {
   }
 });
 
+router.post('/remove', async (req, res) => {
+  const authToken = req.body['auth-token'];
+  const tokenSecret = getTokenSecret();
+  try {
+    const userId = await jwt.verify(authToken, tokenSecret);
+    if (!userId) {
+      res.statusMessage = 'Not Logged In';
+      res.status(400).end();
+    }
+    const artist = req.body.artist;
+    User.findOne({ _id: userId }, (err, user) => {
+      if (err) {
+        res.status(400).send(err);
+      }
+      if (!user.artists.includes(artist)) {
+        res.statusMessage = 'Artist not in your artists';
+        res.status(409).end();
+      } else {
+        user.artists = user.artists.filter(element => element !== artist);
+        user.save();
+        res.send(artist);
+      }
+    });
+  } catch (err) {
+    res.statusMessage = 'Could not add artist';
+    res.status(400).end();
+  }
+});
+
 router.post('/account', async (req, res) => {
   const authToken = req.body['auth-token'];
   const tokenSecret = getTokenSecret();

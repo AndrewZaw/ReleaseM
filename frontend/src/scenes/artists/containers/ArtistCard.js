@@ -31,8 +31,8 @@ const styles = theme => ({
   },
   media: {
     margin: '1em',
-    height: 150,
-    width: 150
+    height: 100,
+    width: 100
   }
 });
 
@@ -40,15 +40,6 @@ class ArtistCard extends Component {
   constructor() {
     super();
   }
-
-  async addArtist(artistName) {
-    const response = await axios.post('/api/artists/add', {
-      artist: artistName,
-      'auth-token': localStorage.getItem('auth-token')
-    });
-  }
-
-  async removeArtist(artistName) {}
 
   render() {
     const { classes } = this.props;
@@ -87,7 +78,7 @@ class ArtistCard extends Component {
                 <Button
                   color="secondary"
                   className={classes.button}
-                  onClick={() => this.removeArtist(this.props.name)}
+                  onClick={() => this.props.removeArtist(this.props.name)}
                 >
                   Remove from Your Artists
                 </Button>
@@ -95,7 +86,7 @@ class ArtistCard extends Component {
                 <Button
                   color="secondary"
                   className={classes.button}
-                  onClick={() => this.addArtist(this.props.name)}
+                  onClick={() => this.props.addArtist(this.props.name)}
                 >
                   Add to Your Artists
                 </Button>
