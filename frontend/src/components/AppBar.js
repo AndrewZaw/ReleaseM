@@ -14,7 +14,15 @@ import {
   ListItemText,
   Tooltip
 } from '@material-ui/core';
-import { Home, Menu, Settings, Info, Help } from '@material-ui/icons';
+import {
+  Home,
+  Menu,
+  Settings,
+  Info,
+  Help,
+  MusicNote,
+  Album
+} from '@material-ui/icons';
 import { Redirect, Link } from 'react-router-dom';
 import GithubIcon from './GithubIcon';
 
@@ -68,17 +76,55 @@ class AppBar extends Component {
     );
   }
 
-  renderList() {
-    const { classes } = this.props;
-    const listText = ['Home', 'How to Use', 'Settings', 'About'];
-    const listIcons = [<Home />, <Help />, <Settings />, <Info />];
-    const listLinks = ['/', '/help', '/settings', '/about'];
+  renderListLoggedIn() {
+    const listText = [
+      'Home',
+      'How to Use',
+      'My Songs',
+      'My Artists',
+      'Settings',
+      'About'
+    ];
+    const listIcons = [
+      <Home />,
+      <Help />,
+      <MusicNote />,
+      <Album />,
+      <Settings />,
+      <Info />
+    ];
+    const listLinks = [
+      '/',
+      '/help',
+
+      '/songs',
+      '/artists',
+      '/settings',
+      '/about'
+    ];
     const list = listText.map((text, i) => ({
       text: text,
       icon: listIcons[i],
       link: listLinks[i]
     }));
 
+    return this.renderListFromInfo(list);
+  }
+
+  renderListNotLoggedIn() {
+    const listText = ['Home', 'How to Use', 'About'];
+    const listIcons = [<Home />, <Help />, <Info />];
+    const listLinks = ['/', '/help', '/about'];
+    const list = listText.map((text, i) => ({
+      text: text,
+      icon: listIcons[i],
+      link: listLinks[i]
+    }));
+    return this.renderListFromInfo(list);
+  }
+
+  renderListFromInfo(list) {
+    const { classes } = this.props;
     return (
       <div
         className={classes.list}
@@ -104,7 +150,9 @@ class AppBar extends Component {
     return (
       <div className={classes.root}>
         <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
-          {this.renderList()}
+          {this.props.loggedIn
+            ? this.renderListLoggedIn()
+            : this.renderListNotLoggedIn()}
         </Drawer>
         <MaterialAppBar position="static">
           <Toolbar>

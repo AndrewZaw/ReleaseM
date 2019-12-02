@@ -38,6 +38,17 @@ const getArtists = async (token, artist) => {
   return artists;
 };
 
+const getSpecificArtist = async (token, artist) => {
+  const url = `https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`;
+  const response = await axios({
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data.artists.items[0];
+};
+
 router.post('/', async (req, res) => {
   try {
     const token = await getToken();
@@ -73,6 +84,33 @@ router.post('/add', async (req, res) => {
     });
   } catch (err) {
     res.statusMessage = 'Could not add artist';
+    res.status(400).end();
+  }
+});
+
+router.post('/account', async (req, res) => {
+  const authToken = req.body['auth-token'];
+  const tokenSecret = getTokenSecret();
+  try {
+    const userId = await jwt.verify(authToken, tokenSecret);
+    const token = await getToken();
+    if (!userId) {
+      res.statusMessage = 'Not Logged In';
+      res.status(400).end();
+    }
+    User.findOne({ _id: userId }, async (err, user) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        let artistsInfo = [];
+        for (artist of user.artists) {
+          artistsInfo.push(await getSpecificArtist(token, artist));
+        }
+        res.send(artistsInfo);
+      }
+    });
+  } catch (err) {
+    res.statusMessage = 'Could not find your artists';
     res.status(400).end();
   }
 });

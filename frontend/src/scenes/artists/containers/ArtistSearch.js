@@ -2,34 +2,12 @@ import React, { Component } from 'react';
 import { Container, Card } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArtistCard from './ArtistCard';
-import axios from 'axios';
 
-const styles = theme => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    margin: theme.spacing(3)
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 280
-  },
-  button: {
-    margin: theme.spacing(3),
-    width: 100
-  }
-});
+const styles = theme => ({});
 
 class YourArtists extends Component {
   constructor(props) {
     super(props);
-  }
-
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -45,13 +23,12 @@ class YourArtists extends Component {
                 name={artist.name}
                 img={artist.images[0] ? artist.images[0].url : ''}
                 profileUrl={artist.external_urls.spotify}
-                yourArtists={true}
                 monthlyListeners={artist.followers.total.toLocaleString()}
               />
             );
           })
         ) : (
-          <Card>You have no artists currently :(</Card>
+          <Card>No Artists found :((</Card>
         )}
       </Container>
     );

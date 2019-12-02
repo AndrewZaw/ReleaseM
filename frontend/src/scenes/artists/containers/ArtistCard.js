@@ -48,7 +48,7 @@ class ArtistCard extends Component {
     });
   }
 
-  removeArtist() {}
+  async removeArtist(artistName) {}
 
   render() {
     const { classes } = this.props;
@@ -87,7 +87,7 @@ class ArtistCard extends Component {
                 <Button
                   color="secondary"
                   className={classes.button}
-                  onClick={this.removeArtist}
+                  onClick={() => this.removeArtist(this.props.name)}
                 >
                   Remove from Your Artists
                 </Button>
