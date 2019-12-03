@@ -5,6 +5,12 @@ import ArtistCard from './ArtistCard';
 import axios from 'axios';
 
 const styles = theme => ({
+  card: {
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
+    margin: '2em',
+    textAlign: 'center',
+    padding: '1em'
+  },
   form: {
     display: 'flex',
     flexDirection: 'column',
@@ -52,7 +58,7 @@ class YourArtists extends Component {
             );
           })
         ) : (
-          <Card>You have no artists currently :(</Card>
+          <Card className={classes.card}>You have no artists currently :(</Card>
         )}
       </Container>
     );
