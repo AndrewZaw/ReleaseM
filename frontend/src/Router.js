@@ -54,7 +54,12 @@ class Router extends Component {
       <ReactRouter>
         <AppBar loggedIn={this.state.loggedIn} logout={this.logout} />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <PropsRoute
+            loggedIn={this.state.loggedIn}
+            exact
+            path="/"
+            component={Home}
+          />
           <PropsRoute
             path="/login"
             login={this.login}

@@ -27,6 +27,39 @@ const styles = theme => ({
 class Home extends Component {
   state = {};
 
+  renderIntro() {
+    const { classes } = this.props;
+    if (!this.props.loggedIn) {
+      return (
+        <div className={classes.heroButtons}>
+          <Grid container spacing={4} justify="center">
+            <Grid item>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                component={Link}
+                to="/register"
+              >
+                Register
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                component={Link}
+                to="/login"
+              >
+                Login
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    }
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -51,32 +84,7 @@ class Home extends Component {
             Tracking the latest releases from all your favorite artists has
             never been easier!
           </Typography>
-          <div className={classes.heroButtons}>
-            <Grid container spacing={4} justify="center">
-              <Grid item>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  component={Link}
-                  to="/register"
-                >
-                  Register
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="primary"
-                  component={Link}
-                  to="/login"
-                >
-                  Login
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+          {this.renderIntro()}
         </Container>
       </div>
     );
