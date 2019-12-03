@@ -145,8 +145,8 @@ class Songs extends Component {
       <Container className={classes.root}>
         <SongForm handleSubmit={this.handleSubmit} />
         <Typography className={classes.text}>
-          By default, only songs up to a month old are shown. This can be
-          adjusted with the form above.
+          By default, only songs up to a month old (30 days) are shown. This can
+          be adjusted with the form above.
         </Typography>
         {this.renderSongs()}
       </Container>

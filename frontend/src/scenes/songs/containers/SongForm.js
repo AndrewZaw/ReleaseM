@@ -58,8 +58,8 @@ class SongForm extends Component {
           id="daysBack"
           name="daysBack"
           className={classes.textField}
-          label="Amount of Days Back"
-          placeholder="Enter the amount of days back you would like to see songs from"
+          label="Amount of Days Old"
+          placeholder="(e.g. 7, 30, 100)"
           margin="normal"
         />
         <Button
