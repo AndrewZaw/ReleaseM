@@ -52,26 +52,23 @@ class Router extends Component {
   render() {
     return (
       <ReactRouter>
-        <div className="App">
-          <AppBar loggedIn={this.state.loggedIn} logout={this.logout} />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <PropsRoute
-              path="/login"
-              login={this.login}
-              loggedIn={this.state.loggedIn}
-              component={Login}
-            />
-            <Route path="/register" component={Register} />
-            <Route path="/songs" component={Songs} />
-            <Route path="/artists" component={Artists} />
-            <Route path="/settings" component={Settings} />
-            <Route path="/about" component={About} />
-            <Route path="/help" component={Help} />
-          </Switch>
-          >
-          <Footer />
-        </div>
+        <AppBar loggedIn={this.state.loggedIn} logout={this.logout} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <PropsRoute
+            path="/login"
+            login={this.login}
+            loggedIn={this.state.loggedIn}
+            component={Login}
+          />
+          <Route path="/register" component={Register} />
+          <Route path="/songs" component={Songs} />
+          <Route path="/artists" component={Artists} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/about" component={About} />
+          <Route path="/help" component={Help} />
+        </Switch>
+        <Footer />
       </ReactRouter>
     );
   }

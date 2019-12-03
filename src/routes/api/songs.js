@@ -28,8 +28,9 @@ const getToken = async () => {
 
 const getSongs = async (token, artist, amount = 50) => {
   let songs = [];
+  const artistUri = encodeURIComponent(artist.trim());
   for (let i = 0; i < amount; i += 50) {
-    const url = `https://api.spotify.com/v1/search?q=${artist}&type=track&limit=50&offset=${i}`;
+    const url = `https://api.spotify.com/v1/search?q=${artistUri}&type=track&limit=50&offset=${i}`;
     const response = await axios({
       url,
       headers: {
@@ -61,7 +62,7 @@ router.post('/', async (req, res) => {
           const newSongs = await getSongs(
             spotifyToken,
             artist.toLowerCase(),
-            50
+            250
           );
           songs = [...songs, ...newSongs];
         }

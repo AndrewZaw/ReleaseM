@@ -16,7 +16,7 @@ class Settings extends Component {
         <Typography variant="h2" className={classes.title}>
           Settings
         </Typography>
-        <Typography></Typography>
+        <Typography>Coming soon!</Typography>
       </Container>
     );
   }

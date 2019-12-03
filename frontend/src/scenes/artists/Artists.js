@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Card, Paper, Tabs, Tab } from '@material-ui/core';
+import {
+  Container,
+  Card,
+  Paper,
+  Tabs,
+  Tab,
+  Typography
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArtistForm from './containers/ArtistForm';
 import YourArtists from './containers/YourArtists';
@@ -8,6 +15,12 @@ import { withSnackbar } from 'notistack';
 import axios from 'axios';
 
 const styles = theme => ({
+  card: {
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
+    margin: '2em',
+    textAlign: 'center',
+    padding: '1em'
+  },
   root: {
     flexGrow: 1
   }
@@ -22,7 +35,7 @@ class Artists extends Component {
   state = {
     artists: [],
     yourArtists: [],
-    tab: 0
+    tab: 1
   };
 
   componentDidMount = () => {
@@ -71,6 +84,35 @@ class Artists extends Component {
     this.updateArtists();
   };
 
+  renderTabs = tabNumber => {
+    const { classes } = this.props;
+    switch (tabNumber) {
+      case 0:
+        return (
+          <Card className={classes.card}>
+            <Typography>Coming soon!</Typography>
+          </Card>
+        );
+      case 1:
+        return (
+          <Fragment>
+            <ArtistForm handleSubmit={this.handleSubmit} />
+            <ArtistSearch
+              addArtist={this.addArtist}
+              artists={this.state.artists}
+            />
+          </Fragment>
+        );
+      case 2:
+        return (
+          <YourArtists
+            removeArtist={this.removeArtist}
+            artists={this.state.yourArtists}
+          />
+        );
+    }
+  };
+
   handleSubmit(artists) {
     this.setState({ artists: artists });
   }
@@ -90,23 +132,11 @@ class Artists extends Component {
           textColor="primary"
           centered
         >
+          <Tab label="Suggested Artists" />
           <Tab label="Add an Artist" />
           <Tab label="Your Artists" />
         </Tabs>
-        {this.state.tab ? (
-          <YourArtists
-            removeArtist={this.removeArtist}
-            artists={this.state.yourArtists}
-          />
-        ) : (
-          <Fragment>
-            <ArtistForm handleSubmit={this.handleSubmit} />
-            <ArtistSearch
-              addArtist={this.addArtist}
-              artists={this.state.artists}
-            />
-          </Fragment>
-        )}
+        {this.renderTabs(this.state.tab)}
       </Container>
     );
   }

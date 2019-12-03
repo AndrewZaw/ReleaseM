@@ -96,7 +96,6 @@ class AppBar extends Component {
     const listLinks = [
       '/',
       '/help',
-
       '/songs',
       '/artists',
       '/settings',
