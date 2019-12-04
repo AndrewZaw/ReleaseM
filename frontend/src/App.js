@@ -3,9 +3,9 @@ import './App.css';
 import 'typeface-roboto';
 import Router from './Router';
 import { SnackbarProvider } from 'notistack';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import theme from './theme';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({});
 function App() {
   return (
     <MuiThemeProvider theme={theme}>

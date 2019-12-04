@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container, Card } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArtistCard from './ArtistCard';
-import axios from 'axios';
 
 const styles = theme => ({
   card: {
