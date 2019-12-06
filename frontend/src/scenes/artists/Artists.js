@@ -106,6 +106,7 @@ class Artists extends Component {
       case 2:
         return (
           <YourArtists
+            handleAddButton={this.handleChange}
             removeArtist={this.removeArtist}
             artists={this.state.yourArtists}
           />

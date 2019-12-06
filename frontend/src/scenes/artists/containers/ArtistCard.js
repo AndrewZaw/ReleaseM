@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
+import { SpotifyIcon } from '../../../components';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -21,16 +22,17 @@ const styles = theme => ({
   },
   artistName: {
     marginLeft: '1em',
-    fontWeight: '500'
+    fontWeight: '400'
   },
   buttonArea: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'flex-end'
+    marginRight: '0.5em'
   },
-  button: {
-    margin: '0.2em'
+  button: {},
+  spotifyButton: {
+    color: '#1db954'
   },
   media: {
     margin: '0em',
@@ -77,33 +79,24 @@ class ArtistCard extends Component {
           </Grid>
           <Grid item xs={3}>
             <CardActions className={classes.buttonArea}>
-              <Button
-                color="primary"
-                className={classes.button}
+              <IconButton
+                className={classes.spotifyButton}
+                color="default"
+                aria-label="See Profile on Spotify"
                 target="_blank"
                 href={this.props.profileUrl}
               >
-                See Profile on Spotify
-              </Button>
+                <SpotifyIcon />
+              </IconButton>
               {this.props.yourArtists ? (
                 <IconButton
-                  color="secondary"
+                  onClick={() => this.props.removeArtist(this.props.name)}
                   aria-label="delete"
-                  className={classes.margin}
-                  size="medium"
+                  className={classes.button}
                 >
                   <Delete />
                 </IconButton>
               ) : (
-                // <Button
-                //   variant="contained"
-                //   color="secondary"
-                //   className={classes.button}
-                //   onClick={() => this.props.removeArtist(this.props.name)}
-                //   startIcon={<Delete />}
-                // >
-                //   Delete
-                // </Button>
                 <Button
                   color="secondary"
                   className={classes.button}

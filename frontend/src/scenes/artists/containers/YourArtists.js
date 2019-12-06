@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Card } from '@material-ui/core';
+import { Container, Card, Fab, Tooltip } from '@material-ui/core';
+import { Add } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import ArtistCard from './ArtistCard';
 
@@ -10,21 +11,9 @@ const styles = theme => ({
     textAlign: 'center',
     padding: '1em'
   },
-  form: {
+  addIcon: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    margin: theme.spacing(3)
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 280
-  },
-  button: {
-    margin: theme.spacing(3),
-    width: 100
+    margin: '2em auto'
   }
 });
 
@@ -36,6 +25,10 @@ class YourArtists extends Component {
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  handleAddButton = () => {
+    this.props.handleAddButton('', 1);
+  };
 
   render() {
     const { classes } = this.props;
@@ -59,6 +52,16 @@ class YourArtists extends Component {
         ) : (
           <Card className={classes.card}>You have no artists currently :(</Card>
         )}
+        <Tooltip title="Add an Artist">
+          <Fab
+            color="primary"
+            aria-label="add"
+            className={classes.addIcon}
+            onClick={this.handleAddButton}
+          >
+            <Add />
+          </Fab>
+        </Tooltip>
       </Container>
     );
   }
