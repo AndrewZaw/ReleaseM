@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Card, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import ArtistCard from './ArtistCard';
+import defaultProfile from '../../../images/defaultProfile.png';
 
 const styles = theme => ({
   card: {
@@ -29,7 +30,7 @@ class YourArtists extends Component {
                 key={i}
                 id={artist.id}
                 name={artist.name}
-                img={artist.images[0] ? artist.images[0].url : ''}
+                img={artist.images[0] ? artist.images[0].url : defaultProfile}
                 profileUrl={artist.external_urls.spotify}
                 monthlyListeners={artist.followers.total.toLocaleString()}
               />

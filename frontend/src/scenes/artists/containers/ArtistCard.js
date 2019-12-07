@@ -8,9 +8,10 @@ import {
   CardActionArea,
   CardActions,
   CardMedia,
-  IconButton
+  IconButton,
+  Tooltip
 } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Add, Delete } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { SpotifyIcon } from '../../../components';
 import axios from 'axios';
@@ -24,20 +25,22 @@ const styles = theme => ({
     marginLeft: '1em',
     fontWeight: '400'
   },
+  media: {
+    margin: '0em',
+    height: 100,
+    width: 100
+  },
   buttonArea: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginRight: '0.5em'
   },
-  button: {},
+  button: {
+    padding: '6px'
+  },
   spotifyButton: {
     color: '#1db954'
-  },
-  media: {
-    margin: '0em',
-    height: 100,
-    width: 100
   }
 });
 
@@ -79,31 +82,37 @@ class ArtistCard extends Component {
           </Grid>
           <Grid item xs={3}>
             <CardActions className={classes.buttonArea}>
-              <IconButton
-                className={classes.spotifyButton}
-                color="default"
-                aria-label="See Profile on Spotify"
-                target="_blank"
-                href={this.props.profileUrl}
-              >
-                <SpotifyIcon />
-              </IconButton>
-              {this.props.yourArtists ? (
+              <Tooltip enterDelay={500} title="See Profile">
                 <IconButton
-                  onClick={() => this.props.removeArtist(this.props.name)}
-                  aria-label="delete"
-                  className={classes.button}
+                  className={`${classes.spotifyButton} ${classes.button}`}
+                  color="default"
+                  aria-label="See Profile on Spotify"
+                  target="_blank"
+                  href={this.props.profileUrl}
                 >
-                  <Delete />
+                  <SpotifyIcon />
                 </IconButton>
+              </Tooltip>
+              {this.props.yourArtists ? (
+                <Tooltip enterDelay={500} title="Remove">
+                  <IconButton
+                    onClick={() => this.props.removeArtist(this.props.name)}
+                    aria-label="delete"
+                    className={classes.button}
+                  >
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
               ) : (
-                <Button
-                  color="secondary"
-                  className={classes.button}
-                  onClick={() => this.props.addArtist(this.props.name)}
-                >
-                  Add to Your Artists
-                </Button>
+                <Tooltip enterDelay={500} title="Add">
+                  <IconButton
+                    onClick={() => this.props.addArtist(this.props.name)}
+                    aria-label="add"
+                    className={classes.button}
+                  >
+                    <Add />
+                  </IconButton>
+                </Tooltip>
               )}
             </CardActions>
           </Grid>
