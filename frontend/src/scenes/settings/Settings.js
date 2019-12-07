@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Container, Typography } from '@material-ui/core';
+import SettingsPaper from './containers/SettingsPaper';
 
 const styles = theme => ({
   title: {
@@ -16,7 +17,7 @@ class Settings extends Component {
         <Typography variant="h2" className={classes.title}>
           Settings
         </Typography>
-        <Typography>Coming soon!</Typography>
+        <SettingsPaper />
       </Container>
     );
   }
