@@ -75,7 +75,7 @@ router.post('/add', async (req, res) => {
       }
       if (user.artists.includes(artist)) {
         res.statusMessage = 'Artist already added';
-        res.status(409).end();
+        res.status(409).send(artist);
       } else {
         user.artists.push(artist);
         user.save();

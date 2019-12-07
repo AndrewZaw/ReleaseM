@@ -59,14 +59,26 @@ class Artists extends Component {
       variant: 'success'
     });
 
-  addArtist = async artistName => {
-    const response = await axios.post('/api/artists/add', {
-      artist: artistName,
-      'auth-token': localStorage.getItem('auth-token')
+  displayArtistAlreadyAddedSnackbar = artist =>
+    this.props.enqueueSnackbar(`${artist} is already in your artists!`, {
+      variant: 'warning'
     });
-    const artist = response.data;
-    this.displayAddArtistSnackbar(artist);
-    this.updateArtists();
+
+  addArtist = async artistName => {
+    try {
+      const response = await axios.post('/api/artists/add', {
+        artist: artistName,
+        'auth-token': localStorage.getItem('auth-token')
+      });
+      const artist = response.data;
+      this.displayAddArtistSnackbar(artist);
+      this.updateArtists();
+    } catch (err) {
+      if (err.response.status === 409) {
+        console.log(err.response.data);
+        this.displayArtistAlreadyAddedSnackbar(err.response.data);
+      }
+    }
   };
 
   displayRemoveArtistSnackbar = artist =>
