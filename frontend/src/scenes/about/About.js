@@ -4,6 +4,7 @@ import { Container, Typography } from '@material-ui/core';
 
 const styles = theme => ({
   title: {
+    fontWeight: 400,
     marginBottom: '0.5em'
   }
 });

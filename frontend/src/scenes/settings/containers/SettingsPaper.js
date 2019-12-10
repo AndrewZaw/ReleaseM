@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Divider, Typography } from '@material-ui/core';
+import { ArrowRight } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {},
@@ -11,6 +12,9 @@ const styles = theme => ({
   settingSubtext: {
     fontWeight: '400',
     color: '#777'
+  },
+  arrowRight: {
+    float: 'right'
   }
 });
 
@@ -23,16 +27,10 @@ class SettingsPaper extends Component {
           Connect your Spotify Account
           <Typography className={classes.settingSubtext}>Test</Typography>
         </Typography>
-
         <Divider />
         <Typography className={classes.setting}>
-          Change your username
-        </Typography>
-        <Divider />
-        <Typography className={classes.setting}>Change your email</Typography>
-        <Divider />
-        <Typography className={classes.setting}>
-          Change your password
+          Manage your account
+          <ArrowRight className={classes.arrowRight} />
         </Typography>
       </Paper>
     );

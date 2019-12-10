@@ -5,6 +5,7 @@ import SettingsPaper from './containers/SettingsPaper';
 
 const styles = theme => ({
   title: {
+    fontWeight: 400,
     marginBottom: '0.5em'
   }
 });
@@ -17,7 +18,7 @@ class Settings extends Component {
         <Typography variant="h2" className={classes.title}>
           Settings
         </Typography>
-        <SettingsPaper />
+        <Typography>Page under construction!</Typography>
       </Container>
     );
   }

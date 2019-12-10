@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   title: {
+    fontWeight: 400,
     marginBottom: '0.5em'
   }
 });

@@ -4,8 +4,14 @@ import 'typeface-roboto';
 import Router from './Router';
 import { SnackbarProvider } from 'notistack';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { indigo, lightGreen } from '@material-ui/core/colors';
 
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+  palette: {
+    primary: indigo,
+    secondary: lightGreen
+  }
+});
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
