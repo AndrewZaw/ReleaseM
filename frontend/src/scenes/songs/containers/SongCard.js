@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-import { Typography, Button, Grid, Card, CardContent, CardActionArea, CardActions, CardMedia } from '@material-ui/core';
+import {
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardActions,
+  CardMedia
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
 const styles = theme => ({
   card: {
     boxShadow: '0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)',
-    margin: '2em'
+    margin: '1em'
   },
   leadArtist: {
     textAlign: 'right'
@@ -36,7 +45,12 @@ class SongCard extends Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card} key={this.props.key}>
-        <Grid container direction="row" justify="flex-start" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
           <Grid item xs={5}>
             <CardContent>
               <Typography className={classes.songName} variant="h5">
@@ -57,7 +71,13 @@ class SongCard extends Component {
           <Grid item xs={3}>
             <CardContent className={classes.artistNames}>
               {this.props.artists.map((artist, i) => (
-                <Typography key={i} className={i === 0 ? classes.leadArtist : classes.featuredArtist} variant="h6">
+                <Typography
+                  key={i}
+                  className={
+                    i === 0 ? classes.leadArtist : classes.featuredArtist
+                  }
+                  variant="h6"
+                >
                   {artist.name}
                 </Typography>
               ))}

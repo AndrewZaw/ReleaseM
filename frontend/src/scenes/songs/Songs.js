@@ -10,6 +10,7 @@ import {
 import SongCard from './containers/SongCard';
 import SongForm from './containers/SongForm';
 import axios from 'axios';
+import SongTable from './containers/SongTable';
 
 const styles = theme => ({
   text: {
@@ -120,16 +121,7 @@ class Songs extends Component {
       );
     }
     if (this.state.songs.length) {
-      return this.state.songs.map((song, i) => (
-        <SongCard
-          key={i}
-          songName={song.name}
-          artists={song.artists}
-          releaseDate={song.album.release_date}
-          spotifyUrl={song.external_urls.spotify}
-          albumName={song.album.name}
-        />
-      ));
+      return <SongTable songs={this.state.songs} />;
     } else {
       return (
         <Card className={classes.card}>
