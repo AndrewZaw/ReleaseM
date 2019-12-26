@@ -34,25 +34,25 @@ class Home extends Component {
         <div className={classes.heroButtons}>
           <Grid container spacing={4} justify="center">
             <Grid item>
-              <Button
-                variant="contained"
-                size="large"
-                color="primary"
-                component={Link}
-                to="/register"
-              >
+              <Button variant="contained" size="large" color="primary" component={Link} to="/register">
                 Register
               </Button>
             </Grid>
             <Grid item>
-              <Button
-                variant="outlined"
-                size="large"
-                color="primary"
-                component={Link}
-                to="/login"
-              >
+              <Button variant="outlined" size="large" color="primary" component={Link} to="/login">
                 Login
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.heroButtons}>
+          <Grid container justify="center">
+            <Grid item>
+              <Button variant="outlined" size="large" color="primary" component={Link} to="/help">
+                How to Use
               </Button>
             </Grid>
           </Grid>
@@ -65,23 +65,11 @@ class Home extends Component {
     return (
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
-          <Typography
-            component="h1"
-            variant="h1"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
+          <Typography component="h1" variant="h1" align="center" color="textPrimary" gutterBottom>
             ReleaseM
           </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Welcome to ReleaseM, the music app designed with you in mind.
-            Tracking the latest releases from all your favorite artists has
+          <Typography variant="h5" align="center" color="textSecondary" paragraph>
+            Welcome to ReleaseM, the music app designed with you in mind. Tracking the latest releases from all your favorite artists has
             never been easier!
           </Typography>
           {this.renderIntro()}
